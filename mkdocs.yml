@@ -1,8 +1,8 @@
-site_name: Crossplane Workshop
+site_name: Another Crossplane Workshop
 site_url: https://alvsanand.github.io/crossplane-workshop/
 site_author: Álvaro Santos Andrés
 site_description: >-
-  Learning material for my workshop about Crossplane
+  Learning material for Another Crossplane Workshop
 
 # Repository
 repo_name: alvsanand/crossplane-workshop
@@ -44,9 +44,10 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
-  favicon: assets/favicon.png
-  icon:
-    logo: logo
+
+  logo: assets/images/favicon.png
+  favicon: assets/images/favicon.png
+
 
 # Plugins
 plugins:
@@ -57,9 +58,13 @@ markdown_extensions:
   - attr_list
   - footnotes
   - meta
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      linenums: true
 
 # Page tree
 nav:
   - Home: index.md
+  - Overview: overview.md
   - Setup Crossplane: setup.md
-  - Your first plane: your-first-plane.md
+  - Working with it: working-with-it.md
