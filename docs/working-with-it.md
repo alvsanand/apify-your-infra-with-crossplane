@@ -4,7 +4,7 @@ hide:
 ---
 # Working with it
 
-Now in the second laboratory, we are going to see the essentials features of Crossplane:
+Now in the second laboratory, we are going to see the essentials of Crossplane:
 
 - [Managed Resources](https://crossplane.io/docs/v1.6/concepts/managed-resources.html)
 - [Compositions](https://crossplane.io/docs/v1.6/concepts/composition.html)

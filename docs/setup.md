@@ -17,6 +17,7 @@ You will need the following resources:
 - Linux, WSL or Linux VM.
 - [Docker](https://docs.docker.com/engine/install/).
 - [Helm](https://helm.sh/)
+- [Github Client](https://github.com/cli/cli)
 
 ## Kubernetes cluster
 
@@ -64,7 +65,7 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     helm upgrade --install localstack localstack-repo/localstack -n awslocal
     ```
 
-- Wait until localstack is installed.
+- Wait until localstack is ready.
 
     ```bash
     kubectl get all -n awslocal
@@ -119,7 +120,7 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     helm install crossplane --namespace crossplane-system crossplane-stable/crossplane
     ```
 
-- Wait until Crossplane is installed.
+- Wait until Crossplane is ready.
 
     ```bash
     kubectl get all -n crossplane-system
@@ -150,7 +151,7 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     kubectl crossplane install provider crossplane/provider-aws:v0.21.0
     ```
 
-- Wait until AWS provider is installed.
+- Wait until AWS provider is ready.
 
     ```bash
     kubectl get providers.pkg.crossplane.io
@@ -219,3 +220,86 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     classifiers.glue.aws.crossplane.io                         2022-01-05T12:14:05Z
     ...
     ```
+
+## ArgoCD
+
+- Install ArgoCD.
+
+    ```bash
+    kubectl create namespace argocd
+
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    ```
+
+- Wait until ArgoCD is ready.
+
+    ```bash
+    kubectl get all -n argocd
+
+    ...
+    NAME                                      READY   STATUS    RESTARTS   AGE
+    pod/argocd-redis-5b6967fdfc-cjbdt         1/1     Running   0          5m4s
+    pod/argocd-repo-server-656c76778f-6vz2t   1/1     Running   0          5m4s
+    pod/argocd-application-controller-0       1/1     Running   0          5m3s
+    pod/argocd-dex-server-66f865ffb4-twwnk    1/1     Running   0          5m4s
+    pod/argocd-server-cd68f46f8-bn2fm         1/1     Running   0          5m4s
+    
+    NAME                            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+    service/argocd-dex-server       ClusterIP   10.43.85.30     <none>        5556/TCP,5557/TCP,5558/TCP   5m5s
+    service/argocd-metrics          ClusterIP   10.43.250.61    <none>        8082/TCP                     5m5s
+    service/argocd-redis            ClusterIP   10.43.175.128   <none>        6379/TCP                     5m5s
+    service/argocd-repo-server      ClusterIP   10.43.183.205   <none>        8081/TCP,8084/TCP            5m5s
+    service/argocd-server           ClusterIP   10.43.35.2      <none>        80/TCP,443/TCP               5m5s
+    service/argocd-server-metrics   ClusterIP   10.43.197.134   <none>        8083/TCP                     5m4s
+    
+    NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
+    deployment.apps/argocd-redis         1/1     1            1           5m4s
+    deployment.apps/argocd-repo-server   1/1     1            1           5m4s
+    deployment.apps/argocd-dex-server    1/1     1            1           5m4s
+    deployment.apps/argocd-server        1/1     1            1           5m4s
+    
+    NAME                                            DESIRED   CURRENT   READY   AGE
+    replicaset.apps/argocd-redis-5b6967fdfc         1         1         1       5m4s
+    replicaset.apps/argocd-repo-server-656c76778f   1         1         1       5m4s
+    replicaset.apps/argocd-dex-server-66f865ffb4    1         1         1       5m4s
+    replicaset.apps/argocd-server-cd68f46f8         1         1         1       5m4s
+    
+    NAME                                             READY   AGE
+    statefulset.apps/argocd-application-controller   1/1     5m4s
+    ```
+
+- Install also ArgoCD CLI in you computer.
+
+    ```bash
+    sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+
+    sudo chmod +x /usr/local/bin/argocd
+    ```
+- Expose ArgoCD API Server:
+
+    ```bash
+    kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+    ```
+
+- Change ArgoCD credentials:
+
+    ```bash
+    kubectl -n argocd patch secret argocd-secret \
+        -p '{"stringData": {"admin.password": "$2a$10$mivhwttXM0U5eBrZGtAG8.VSRL1l9cZNAmaSaqotIzXRBRwID1NT.",
+            "admin.passwordMtime": "'$(date +%FT%T)'"
+        }}'
+    ```
+
+- Expose ArgoCD UI:
+
+    ```bash
+    kubectl port-forward svc/argocd-server -n argocd 10443:443 2>&1 > /dev/null &
+    ```
+
+- Login with ArgoCD CLI:
+
+    ```bash
+    argocd login localhost:10443 --username admin --password admin --insecure
+    ```
+
+- Finally, open ArgoCD UI in your browser: (https://localhost:10443).
