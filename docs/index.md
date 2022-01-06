@@ -22,9 +22,9 @@ The goals of this workshop are:
 
 ## Index
 
-- [Overview](https://alvsanand.github.io/crossplane-workshop/overview)
-- [Setup](https://alvsanand.github.io/crossplane-workshop/setup)
-- [Your first plane](https://alvsanand.github.io/crossplane-workshop/your-first-plane)
+- [Overview](https://alvsanand.github.io/another-crossplane-workshop/overview)
+- [Setup](https://alvsanand.github.io/another-crossplane-workshop/setup)
+- [Your first plane](https://alvsanand.github.io/another-crossplane-workshop/your-first-plane)
 
 ## Thanks
 

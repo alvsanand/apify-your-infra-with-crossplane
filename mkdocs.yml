@@ -1,12 +1,12 @@
 site_name: Another Crossplane Workshop
-site_url: https://alvsanand.github.io/crossplane-workshop/
+site_url: https://alvsanand.github.io/another-crossplane-workshop/
 site_author: Álvaro Santos Andrés
 site_description: >-
   Learning material for Another Crossplane Workshop
 
 # Repository
-repo_name: alvsanand/crossplane-workshop
-repo_url: https://github.com/alvsanand/crossplane-workshop
+repo_name: alvsanand/another-crossplane-workshop
+repo_url: https://github.com/alvsanand/another-crossplane-workshop
 edit_uri: ""
 
 

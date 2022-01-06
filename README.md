@@ -1,4 +1,4 @@
-# crossplane-workshop
+# Another Crossplane Workshop
 
 This is the learning material for **Another Crossplane Workshop**.
 
