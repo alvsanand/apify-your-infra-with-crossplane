@@ -1,11 +1,10 @@
 ---
 hide:
   - navigation
-  - toc
 ---
 # Overview
 
-![Crossplane](assets/images/crossplane-banner.png)
+![Crossplane](assets/images/crossplane-banner-2.png)
 
 [Crossplane](https://crossplane.io/) is an open source [Cloud Native Compute Foundation](https://www.cncf.io/) project that transforms a [Kubernetes](https://kubernetes.io/) cluster into a universal control plane. With the help of Crossplane, you will be able to assemble infrastructure from multiple vendors, and expose higher level self-service APIs for application teams to consume, without having to write any code.
 

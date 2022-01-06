@@ -1,7 +1,6 @@
 ---
 hide:
   - navigation
-  - toc
 ---
 # Setup Crossplane
 
@@ -15,35 +14,40 @@ In the first lab, you will setup your computer for the following laboratories. T
 
 You will need the following resources:
 
-- Windows, OSX or Linux
+- Linux, WSL or Linux VM.
 - [Docker](https://docs.docker.com/engine/install/).
 - [Helm](https://helm.sh/)
 
 ## Kubernetes cluster
 
-In case you need a Kubernetes cluster locally, I encourage to use [k3d](https://k3d.io/) is a lightweight wrapper to run [k3s](https://github.com/rancher/k3s) (Rancher Lab’s minimal Kubernetes distribution) in docker.
+We will use [k3d](https://k3d.io/) which will create a [k3s](https://github.com/rancher/k3s) (Rancher Lab’s minimal Kubernetes distribution) cluster.
 
-- [Install](https://k3d.io/v4.4.8/#quick-start) k3d cli.
-
-- Create a k3d cluster with 1 master and 2 workers.
+- [Install](https://k3d.io/stable/#quick-start) k3d cli.
 
     ```bash
-    k3d cluster create --agents 2 --servers 1 --registry-create k3d-local-registry
+    curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
     ```
 
-- Get your machine to know k3d-local-registry:
+- Create a k3d cluster with 1 master and 2 workers with a registry.
 
-    - If Linux based system, install ```libnss-myhostname```:
+    ```bash
+    k3d cluster create --agents 2 --servers 1 --registry-create k3d-local-registry:0.0.0.0:5432
+    ```
 
-        ```bash
-        sudo apt install libnss-myhostname
-        ```  
-    
-    - For add following entry to ```/etc/hosts``` file if using Unix based system or ```C:\windows\system32\drivers\etc\hosts``` file if Windows system: 
+- Obtain you local IP address.
 
-        ```bash
-        127.0.0.1 k3d-local-registry.localhost
-        ```
+    ```bash
+    LOCAL_IP=$(ifconfig eth0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}')
+    ```
+
+- [Add](https://stackoverflow.com/a/63227959) "LOCAL_IP:5432" to "insecure-registries".
+
+!!! note
+    When you have finished the workshop, you should delete the Kubernetes cluster with the following command:.
+
+    ```bash
+    k3d cluster delete
+    ```
 
 ## Localstack
 
@@ -52,18 +56,37 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
 - Install localstack helm.
 
     ```bash
-    kubectl create namespace localaws
+    kubectl create namespace awslocal
 
     helm repo add localstack-repo https://helm.localstack.cloud
     helm repo update
 
-    helm upgrade --install localstack localstack-repo/localstack -n localaws
+    helm upgrade --install localstack localstack-repo/localstack -n awslocal
+    ```
+
+- Wait until localstack is installed.
+
+    ```bash
+    kubectl get all -n awslocal
+
+    ...
+    NAME                              READY   STATUS    RESTARTS   AGE
+    pod/localstack-6fb5dd88d7-chkcn   1/1     Running   0          4m2s
+
+    NAME                 TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)                         AGE
+    service/localstack   NodePort   10.43.185.234   <none>        4566:31566/TCP,4571:31571/TCP   4m2s
+
+    NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+    deployment.apps/localstack   1/1     1            1           4m2s
+
+    NAME                                    DESIRED   CURRENT   READY   AGE
+    replicaset.apps/localstack-6fb5dd88d7   1         1         1       4m2s
     ```
 
 - Configure localstack to your be accessive by your local machine.
 
     ```bash
-    kubectl port-forward -n localaws service/localstack 34566:4566 > /dev/null 2>&1 &
+    kubectl port-forward -n awslocal service/localstack 34566:4566 > /dev/null 2>&1 &
 
     alias awslocal="AWS_ACCESS_KEY_ID='test' AWS_SECRET_ACCESS_KEY='test' AWS_DEFAULT_REGION='us-east-1' aws --endpoint-url=http://localhost:34566"
     ```
@@ -99,7 +122,20 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
 - Wait until Crossplane is installed.
 
     ```bash
-    kubectl get all -n crossplane-system -w
+    kubectl get all -n crossplane-system
+
+    ...
+    NAME                                           READY   STATUS    RESTARTS   AGE
+    pod/crossplane-rbac-manager-5bf768f5dc-m5fvr   1/1     Running   0          34s
+    pod/crossplane-7545d9567-wntct                 1/1     Running   0          34s
+
+    NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
+    deployment.apps/crossplane-rbac-manager   1/1     1            1           34s
+    deployment.apps/crossplane                1/1     1            1           34s
+
+    NAME                                                 DESIRED   CURRENT   READY   AGE
+    replicaset.apps/crossplane-rbac-manager-5bf768f5dc   1         1         1       34s
+    replicaset.apps/crossplane-7545d9567                 1         1         1       34s
     ```
 
 - Install Crossplane cli.
@@ -117,7 +153,7 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
 - Wait until AWS provider is installed.
 
     ```bash
-    kubectl get providers.pkg.crossplane.io -w
+    kubectl get providers.pkg.crossplane.io
 
     ...
     NAME                      INSTALLED   HEALTHY   PACKAGE                           AGE
@@ -147,7 +183,7 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
         hostnameImmutable: true
         url:
           type: Static
-          static: http://localstack.localaws.svc.cluster.local:4566
+          static: http://localstack.awslocal.svc.cluster.local:4566
       credentials:
         source: Secret
         secretRef:

@@ -5,7 +5,7 @@ hide:
 ---
 # Welcome to ACW (Another Crossplane Workshop)
 
-![Crossplane](assets/images/crossplane-banner-2.png)
+![Crossplane](assets/images/crossplane-banner.png)
 
 [Crossplane](https://crossplane.io/) is an open source [Cloud Native Compute Foundation](https://www.cncf.io/) project that transforms a [Kubernetes](https://kubernetes.io/) cluster into a universal control plane.
 
@@ -28,8 +28,9 @@ The goals of this workshop are:
 
 ## Thanks
 
-I would like to thanks to:
+I would like to thank to:
 
 - [Crossplane](https://crossplane.io/) project.
 - [Upbound](https://blog.upbound.io/introducing-crossplane-open-source-multicloud-control-plane/).
 - [Daniel Mangum](https://danielmangum.com/posts/crossplane-infrastructure-llvm/).
+- [Localstack](https://localstack.cloud/) project.

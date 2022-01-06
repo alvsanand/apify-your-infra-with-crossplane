@@ -55,12 +55,14 @@ plugins:
 
 # Extensions
 markdown_extensions:
+  - admonition
   - attr_list
   - footnotes
   - meta
-  - pymdownx.superfences
+  - pymdownx.details
   - pymdownx.highlight:
       linenums: true
+  - pymdownx.superfences
 
 # Page tree
 nav:
