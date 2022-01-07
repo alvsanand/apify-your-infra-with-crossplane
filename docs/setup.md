@@ -2,26 +2,33 @@
 hide:
   - navigation
 ---
-# Setup Crossplane
+# Lab 1 - Setup
 
-In the first lab, you will setup your computer for the following laboratories. These are the elements to install:
+In the first lab, you will setup your computer for the following laboratories. Here are some services that we will install:
 
 - Local Kubernetes cluster
 - Crossplane
 - [Localstack](https://localstack.cloud/)
 
-## Requisites
+## 0. Requisites
 
-You will need the following resources:
+Before begining with this laboratory, it is neccessary to have the installed and configured the following elements:
 
 - Linux, WSL or Linux VM.
 - [Docker](https://docs.docker.com/engine/install/).
 - [Helm](https://helm.sh/)
 - [Github Client](https://github.com/cli/cli)
 
-## 01. Kubernetes cluster
+## 1. Kubernetes
 
-We will use [k3d](https://k3d.io/) which will create a [k3s](https://github.com/rancher/k3s) (Rancher Lab’s minimal Kubernetes distribution) cluster.
+![k3d](assets/images/k3d.svg){ style="width:400px" align=right }
+
+Although there are many easy of ways for deploying a Kubernetes cluster ([Docker Desktop](https://www.docker.com/products/docker-desktop), [Minikube](https://minikube.sigs.k8s.io/docs/), [Kind](https://kind.sigs.k8s.io/), [Rancher Desktop](https://rancherdesktop.io/), ...), we have selected [k3d](https://k3d.io/) because it is ver fast and easy to install.
+
+!!! info
+    [k3d](https://k3d.io/) is a lightweight wrapper to run k3s (Rancher Lab’s minimal Kubernetes distribution) in docker.
+
+    k3d makes it very easy to create single- and multi-node k3s clusters in docker, e.g. for local development on Kubernetes.
 
 - [Install](https://k3d.io/stable/#quick-start) k3d cli.
 
@@ -35,22 +42,24 @@ We will use [k3d](https://k3d.io/) which will create a [k3s](https://github.com/
     k3d cluster create --agents 2 --servers 1 --registry-create k3d-local-registry:0.0.0.0:5432
     ```
 
-- Obtain you local IP address.
+- Obtain the local IP address of your computer.
 
     ```bash
     LOCAL_IP=$(ifconfig eth0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}')
     ```
 
-- [Add](https://stackoverflow.com/a/63227959) "LOCAL_IP:5432" to "insecure-registries".
+- [Add](https://stackoverflow.com/a/63227959) "LOCAL_IP:5432" to "insecure-registries" in Docker.
 
-!!! note
-    When you have finished the workshop, you should delete the Kubernetes cluster with the following command:.
+!!! warning
+    This is necessary, so we can use the Image registry created by k3d.
+
+- When you have finished the workshop, you should delete the Kubernetes cluster.
 
     ```bash
     k3d cluster delete
     ```
 
-## 02. Crossplane
+## 2. Crossplane
 
 - Install Crossplane.
 
@@ -164,7 +173,7 @@ We will use [k3d](https://k3d.io/) which will create a [k3s](https://github.com/
     ...
     ```
 
-## 03. Localstack
+## 3. Localstack
 
 In order to simulate AWS cloud, we will use [Localstack](https://localstack.cloud/).
 
@@ -221,7 +230,7 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     }
     ```
 
-## 04. ArgoCD
+## 4. ArgoCD
 
 - Install ArgoCD.
 
@@ -297,4 +306,4 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     argocd login localhost:10443 --username admin --password admin --insecure
     ```
 
-- Finally, open [ArgoCD UI](https://localhost:10443) in your browser.
+- Finally, in order to test it, open [ArgoCD UI](https://localhost:10443) in your browser.

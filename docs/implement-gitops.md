@@ -2,22 +2,22 @@
 hide:
   - navigation
 ---
-# Integrate in GitOps
+# Lab 3 - Implement GitOps
 
 GitOps is a set of practices to manage infrastructure and application configurations using Git, an open source version control system. GitOps works by using Git as a single source of truth for declarative infrastructure and applications. The Git repository contains the entire state of the system so that the trail of changes to the system state are visible and auditable.
 
 Using GitOps tool such as Argo CD or Flux CD, we will be able to make our target system match the desired state that is coded in the Git repository. So when we will deploy new resources or update an existing ones, after updating the repository the automated process will apply the changes.
 
-In the last laboratory, we will apply this concepts to our infrastructure using Crossplane and [Argo CD](https://argo-cd.readthedocs.io/en/stable/).
+In the last laboratory, we will apply this concepts to deploy our infrastructure using Crossplane and [Argo CD](https://argo-cd.readthedocs.io/en/stable/) without human intervention.
 
-!!! note
+!!! info
     If you want to know more about Gitops and Argo CD, please read my article [From GIT to Kubernetes in 10 minutes with ArgoCD](https://santanderglobaltech.com/en/from-git-to-kubernetes-in-10-minutes-with-argocd/).
 
-## 01. Creating the IaC repository
+## 1. Creating IaC repository
 
-As said before a Git will be the single source of truth for our infrastructure and will contain the entire state and history of it so that the trail of changes to the system state are visible and auditable.
+As said before, a Git will be our source of truth for our infrastructure and will contain the entire state and history of it. So that the trail of changes to the system state are visible and auditable.
 
-### Create a Github repository
+### 1.1. Create a Github repository
 
 First thing to do is to create a Git repository that we will use to store the Crosplanes files.
 
@@ -27,11 +27,11 @@ gh repo create --public acw-crossplane-with-argocd --clone --gitignore Python
 cd acw-crossplane-with-argocd
 ```
 
-### Add Crossplane files
+### 1.2. Add Crossplane resources
 
-Now, we have to create the Crosplanes files but for now we will not commit them.
+Next, we have to add the yaml files containing the Crossplain resources. However, we will not push the changes to the repository.
 
-!!! note
+!!! tip
     In this case, we have to add ```argocd.argoproj.io/sync-wave``` and ```argocd.argoproj.io/sync-options``` annotations that will indicate ArgoCD the order of execution so claim must execute only after XD resources are created. See [Sync Phases and Waves](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/) and [Skip Dry Run for new custom resources types](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#skip-dry-run-for-new-custom-resources-types) for more information.
 
 - Create a ```CompositeResourceDefinition``` file.
@@ -134,9 +134,9 @@ Now, we have to create the Crosplanes files but for now we will not commit them.
     EOF
     ```
 
-## 02. Create an App in ArgoCD
+## 2. Create an App in ArgoCD
 
-Now that we have a repository, we have to create an [Application](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#applications) in ArgoCD so Crossplane resources will be deployed automatically.
+After the repository is created, we should create an [Application](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#applications) in ArgoCD. Therefore, ArgoCD will sync the Crossplane resources will the state stored in the repository. However, having the repository with no files will not create any resources.
 
 - Obtain HTTPS url of the GIT repository.
 
@@ -179,9 +179,9 @@ Now that we have a repository, we have to create an [Application](https://argo-c
 
 - Furthermore, you can check in [ArgoCD UI](https://localhost:10443/applications/acw-storage?resource=&conditions=false) the status of the application.
 
-![ArgoCD - Created Application](assets/images/argocd-created-app.png)
+![ArgoCD - Application Empty](assets/images/argocd-created-app.png)
 
-## 03. Commit changes to Git
+## 3. Commit changes to Github
 
 After ArgoCD is ready to watch for changes, we will push the files to the repo in order to force the deployment.
 
@@ -198,7 +198,15 @@ After ArgoCD is ready to watch for changes, we will push the files to the repo i
     git push --set-upstream origin main
     ```
 
-- Wait some minutes until the application is sync again.
+## 4. Wait for ArgoCD to sync
+
+Now that the changes are in Git, ArgoCD will detect the chances and sync our infrastructure to match the state of the repository.
+
+- Wait some minutes until the application is synced.
+
+![ArgoCD - Application Syncing](assets/images/argocd-syncing-app.png)
+
+- After the sync is completed, you can check the application status.
 
     ```bash
     kubectl describe applications -n argocd acw-storage
@@ -409,9 +417,9 @@ After ArgoCD is ready to watch for changes, we will push the files to the repo i
       Normal  ResourceUpdated     4m27s  argocd-application-controller  Updated sync status: OutOfSync -> Synced
     ```
 
-- Again, you can check in [ArgoCD UI](https://localhost:10443/applications/acw-storage?resource=&conditions=false) the status of the application.
+- Finally, you can check in [ArgoCD UI](https://localhost:10443/applications/acw-storage?resource=&conditions=false) the status of the application.
 
-![ArgoCD - Created Application](assets/images/argocd-synced-app.png)
+![ArgoCD - Application Synced](assets/images/argocd-synced-app.png)
 
 - Check that the xdostorages is created.
 
@@ -453,11 +461,11 @@ After ArgoCD is ready to watch for changes, we will push the files to the repo i
     }
     ```
 
-### Cleanup the Composition
+## 5. Cleanup the laboratory
 
-Last step, delete all resources created. We must only delete the ArgoCD app
+Last step, delete all resources created. In this case, we should delete the application and ArgoCD will delete the resources created with it.
 
-- Delete all the resources.
+- Delete the application.
 
     ```bash
     kubectl delete application -n argocd acw-storage

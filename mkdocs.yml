@@ -29,8 +29,8 @@ theme:
     - search.suggest
   palette:
     - scheme: default
-      primary: indigo
-      accent: indigo
+      primary: red
+      accent: red
       toggle:
         icon: material/toggle-switch
         name: Switch to dark mode
@@ -66,6 +66,6 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Overview: overview.md
-  - Setup Crossplane: setup.md
-  - Working with it: working-with-it.md
-  - Integrate in GitOps: integrate-in-gitops.md
+  - Lab 1 - Setup: setup.md
+  - Lab 2 - Know the basis: know-the-basis.md
+  - Lab 3 - Implement GitOps: implement-gitops.md

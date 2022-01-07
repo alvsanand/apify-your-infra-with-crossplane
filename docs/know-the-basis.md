@@ -2,22 +2,23 @@
 hide:
   - navigation
 ---
-# Working with it
+# Lab 2 - Know the basis
 
-Now in the second laboratory, we are going to see the essentials of Crossplane:
+In the second laboratory, we are going to see the essentials of Crossplane:
 
 - [Managed Resources](https://crossplane.io/docs/v1.6/concepts/managed-resources.html)
 - [Compositions](https://crossplane.io/docs/v1.6/concepts/composition.html)
 - [Packages](https://crossplane.io/docs/v1.6/concepts/packages.html)
 
-## Managed resources
+## 1. Managed resources
+
+![Managed Resources](assets/images/crossplane-mrs.png){ style="width:500px" align=right }
 
 A Managed Resource (MR) is Crossplane’s representation of a resource in an external system - most commonly a cloud provider. They are the building blocks of Crossplane.
 
 For example, Bucket in the AWS Provider corresponds to an actual S3 Bucket in AWS. There is a one-to-one relationship and the changes on managed resources are reflected directly on the corresponding resource in the provider. You can see all available managed resources running this command ```kubectl get crds | grep aws | sort``` and the API specification in the [documentation](https://doc.crds.dev/github.com/crossplane/provider-aws).
 
-
-### Creating a S3 Bucket
+### 1.1 Create a S3 Bucket
 
 Now, we are going to create a Bucket and test that is working.
 
@@ -69,8 +70,7 @@ Now, we are going to create a Bucket and test that is working.
     }
     ```
 
-
-### Cleanup the MR
+### 1.2 Cleanup the MR
 
 Finally, delete the resource created.
 
@@ -95,7 +95,7 @@ Finally, delete the resource created.
     }
     ```
 
-## Compositions
+## 2. Compositions
 
 Crossplane Composite Resources (XR) are opinionated Kubernetes Custom Resources that are composed of Managed Resources. We often call them XRs for short.
 
@@ -103,7 +103,7 @@ Crossplane Composite Resources (XR) are opinionated Kubernetes Custom Resources 
 
 Composite Resources are designed to let you build your own platform with your own opinionated concepts and APIs without needing to write a Kubernetes controller from scratch. Instead, you define the schema of your XR and teach Crossplane which Managed Resources it should compose (i.e. create) when someone creates the XR you defined.
 
-### Creating a Storage composition
+### 2.1 Create a composition
 
 First step, we have to create a composition for our Object Storage block so users will use it.
 
@@ -200,7 +200,7 @@ First step, we have to create a composition for our Object Storage block so user
     xdostorages.aws.storage.acw.alvsanand.github.io   27s
     ```
 
-### Creating a Storage claim
+### 2.2 Create a claim
 
 Second step, user will create a claim for the Storage composition.
 
@@ -262,7 +262,7 @@ Second step, user will create a claim for the Storage composition.
     }
     ```
 
-### Cleanup the Composition
+### 2.3 Cleanup the Composition
 
 Last step, delete all resources created.
 
@@ -291,13 +291,13 @@ Last step, delete all resources created.
     }
     ```
 
-## Packages
+## 3. Packages
 
 Crossplane packages are opinionated OCI images that contain a stream of YAML that can be parsed by the Crossplane package manager. Crossplane packages come in two varieties: Providers and Configurations. They vary in the types of resources they may contain in their packages.
 
 In the last part of the laboratory, we will cover [Configurations](https://crossplane.io/docs/v1.6/concepts/packages.html#configuration-packages).
 
-### Creating a Configuration package
+### 3.1 Create a Configuration package
 
 Firstly, we have to create the package with the required resources in you local machine.
 
@@ -445,7 +445,7 @@ Firstly, we have to create the package with the required resources in you local 
     kubectl get composition | grep xdostorages
     ```
 
-### Creating a Storage claim again
+### 3.2 Create a claim again
 
 Secondly, user will create a claim for the Storage composition but this time loaded from a Configuration package.
 
@@ -507,7 +507,7 @@ Secondly, user will create a claim for the Storage composition but this time loa
     }
     ```
 
-### Cleanup the Composition
+### 3.3 Cleanup the Package
 
 Finally, delete all resources created.
 

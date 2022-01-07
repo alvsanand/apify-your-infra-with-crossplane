@@ -15,20 +15,22 @@ In this workshop, you will be able to learn what Crossplane is and why is so dis
 
 The goals of this workshop are:
 
-- What is Crossplane and some of its features.
-- Install and test it in your local Kubernetes.
-- Create custom Composite Resources.
-- Integrate with into your CD workflow.
+- Know what is Crossplane and some of its great features.
+- Install and use it in your local Kubernetes without any costs.
+- Deploy "real" infrastructure with a couple of commands.
+- Create custom composite resources and packages.
+- Integrate your infrastructure in a Continuos Delivery pipeline.
 
 ## Index
 
 - [Overview](https://alvsanand.github.io/another-crossplane-workshop/overview)
-- [Setup](https://alvsanand.github.io/another-crossplane-workshop/setup)
-- [Your first plane](https://alvsanand.github.io/another-crossplane-workshop/your-first-plane)
+- [Lab 1 - Setup](https://alvsanand.github.io/another-crossplane-workshop/setup/)
+- [Lab 2 - Know the basis](https://alvsanand.github.io/another-crossplane-workshop/know-the-basis/)
+- [Lab 3 - Implement GitOps](https://alvsanand.github.io/another-crossplane-workshop/implement-gitops/)
 
 ## Thanks
 
-I would like to thank to:
+I would like to thank for helping me doing this workshop:
 
 - [Crossplane](https://crossplane.io/) project.
 - [Upbound](https://blog.upbound.io/introducing-crossplane-open-source-multicloud-control-plane/).
