@@ -19,7 +19,7 @@ You will need the following resources:
 - [Helm](https://helm.sh/)
 - [Github Client](https://github.com/cli/cli)
 
-## Kubernetes cluster
+## 01. Kubernetes cluster
 
 We will use [k3d](https://k3d.io/) which will create a [k3s](https://github.com/rancher/k3s) (Rancher Lab’s minimal Kubernetes distribution) cluster.
 
@@ -50,64 +50,7 @@ We will use [k3d](https://k3d.io/) which will create a [k3s](https://github.com/
     k3d cluster delete
     ```
 
-## Localstack
-
-In order to simulate AWS cloud, we will use [Localstack](https://localstack.cloud/).
-
-- Install localstack helm.
-
-    ```bash
-    kubectl create namespace awslocal
-
-    helm repo add localstack-repo https://helm.localstack.cloud
-    helm repo update
-
-    helm upgrade --install localstack localstack-repo/localstack -n awslocal
-    ```
-
-- Wait until localstack is ready.
-
-    ```bash
-    kubectl get all -n awslocal
-
-    ...
-    NAME                              READY   STATUS    RESTARTS   AGE
-    pod/localstack-6fb5dd88d7-chkcn   1/1     Running   0          4m2s
-
-    NAME                 TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)                         AGE
-    service/localstack   NodePort   10.43.185.234   <none>        4566:31566/TCP,4571:31571/TCP   4m2s
-
-    NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
-    deployment.apps/localstack   1/1     1            1           4m2s
-
-    NAME                                    DESIRED   CURRENT   READY   AGE
-    replicaset.apps/localstack-6fb5dd88d7   1         1         1       4m2s
-    ```
-
-- Configure localstack to your be accessive by your local machine.
-
-    ```bash
-    kubectl port-forward -n awslocal service/localstack 34566:4566 > /dev/null 2>&1 &
-
-    alias awslocal="AWS_ACCESS_KEY_ID='test' AWS_SECRET_ACCESS_KEY='test' AWS_DEFAULT_REGION='us-east-1' aws --endpoint-url=http://localhost:34566"
-    ```
-
-- Test awscli.
-
-    ```bash
-    awslocal s3api list-buckets
-
-    ...
-    {
-        "Buckets": [],
-        "Owner": {
-            "DisplayName": "webfile",
-            "ID": "bcaf1ffd86f41161ca5fb16fd081034f"
-        }
-    }
-    ```
-
-## Crossplane
+## 02. Crossplane
 
 - Install Crossplane.
 
@@ -162,7 +105,7 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     ```
 
 - Create AWS credentials for crossplane.
-    
+
     ```bash
     cat <<EOF | kubectl apply -f -
     ---
@@ -221,7 +164,64 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     ...
     ```
 
-## ArgoCD
+## 03. Localstack
+
+In order to simulate AWS cloud, we will use [Localstack](https://localstack.cloud/).
+
+- Install localstack helm.
+
+    ```bash
+    kubectl create namespace awslocal
+
+    helm repo add localstack-repo https://helm.localstack.cloud
+    helm repo update
+
+    helm upgrade --install localstack localstack-repo/localstack -n awslocal
+    ```
+
+- Wait until localstack is ready.
+
+    ```bash
+    kubectl get all -n awslocal
+
+    ...
+    NAME                              READY   STATUS    RESTARTS   AGE
+    pod/localstack-6fb5dd88d7-chkcn   1/1     Running   0          4m2s
+
+    NAME                 TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)                         AGE
+    service/localstack   NodePort   10.43.185.234   <none>        4566:31566/TCP,4571:31571/TCP   4m2s
+
+    NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+    deployment.apps/localstack   1/1     1            1           4m2s
+
+    NAME                                    DESIRED   CURRENT   READY   AGE
+    replicaset.apps/localstack-6fb5dd88d7   1         1         1       4m2s
+    ```
+
+- Configure localstack to your be accessive by your local machine.
+
+    ```bash
+    kubectl port-forward -n awslocal service/localstack 34566:4566 > /dev/null 2>&1 &
+
+    alias awslocal="AWS_ACCESS_KEY_ID='test' AWS_SECRET_ACCESS_KEY='test' AWS_DEFAULT_REGION='us-east-1' aws --endpoint-url=http://localhost:34566"
+    ```
+
+- Test awscli.
+
+    ```bash
+    awslocal s3api list-buckets
+
+    ...
+    {
+        "Buckets": [],
+        "Owner": {
+            "DisplayName": "webfile",
+            "ID": "bcaf1ffd86f41161ca5fb16fd081034f"
+        }
+    }
+    ```
+
+## 04. ArgoCD
 
 - Install ArgoCD.
 
@@ -243,7 +243,7 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     pod/argocd-application-controller-0       1/1     Running   0          5m3s
     pod/argocd-dex-server-66f865ffb4-twwnk    1/1     Running   0          5m4s
     pod/argocd-server-cd68f46f8-bn2fm         1/1     Running   0          5m4s
-    
+
     NAME                            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
     service/argocd-dex-server       ClusterIP   10.43.85.30     <none>        5556/TCP,5557/TCP,5558/TCP   5m5s
     service/argocd-metrics          ClusterIP   10.43.250.61    <none>        8082/TCP                     5m5s
@@ -251,19 +251,19 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     service/argocd-repo-server      ClusterIP   10.43.183.205   <none>        8081/TCP,8084/TCP            5m5s
     service/argocd-server           ClusterIP   10.43.35.2      <none>        80/TCP,443/TCP               5m5s
     service/argocd-server-metrics   ClusterIP   10.43.197.134   <none>        8083/TCP                     5m4s
-    
+
     NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
     deployment.apps/argocd-redis         1/1     1            1           5m4s
     deployment.apps/argocd-repo-server   1/1     1            1           5m4s
     deployment.apps/argocd-dex-server    1/1     1            1           5m4s
     deployment.apps/argocd-server        1/1     1            1           5m4s
-    
+
     NAME                                            DESIRED   CURRENT   READY   AGE
     replicaset.apps/argocd-redis-5b6967fdfc         1         1         1       5m4s
     replicaset.apps/argocd-repo-server-656c76778f   1         1         1       5m4s
     replicaset.apps/argocd-dex-server-66f865ffb4    1         1         1       5m4s
     replicaset.apps/argocd-server-cd68f46f8         1         1         1       5m4s
-    
+
     NAME                                             READY   AGE
     statefulset.apps/argocd-application-controller   1/1     5m4s
     ```
@@ -275,13 +275,8 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
 
     sudo chmod +x /usr/local/bin/argocd
     ```
-- Expose ArgoCD API Server:
 
-    ```bash
-    kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
-    ```
-
-- Change ArgoCD credentials:
+- Change ArgoCD credentials.
 
     ```bash
     kubectl -n argocd patch secret argocd-secret \
@@ -290,16 +285,16 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
         }}'
     ```
 
-- Expose ArgoCD UI:
+- Expose ArgoCD UI.
 
     ```bash
-    kubectl port-forward svc/argocd-server -n argocd 10443:443 2>&1 > /dev/null &
+    kubectl port-forward svc/argocd-server -n argocd 10443:443 > /dev/null 2>&1 &
     ```
 
-- Login with ArgoCD CLI:
+- Login with ArgoCD CLI.
 
     ```bash
     argocd login localhost:10443 --username admin --password admin --insecure
     ```
 
-- Finally, open ArgoCD UI in your browser: (https://localhost:10443).
+- Finally, open [ArgoCD UI](https://localhost:10443) in your browser.

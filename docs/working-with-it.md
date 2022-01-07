@@ -21,8 +21,8 @@ For example, Bucket in the AWS Provider corresponds to an actual S3 Bucket in AW
 
 Now, we are going to create a Bucket and test that is working.
 
-- Create the MR for the bucket:
-    
+- Create the MR for the bucket.
+
     ```bash
     cat <<EOF | kubectl apply -f -
     apiVersion: s3.aws.crossplane.io/v1beta1
@@ -40,7 +40,7 @@ Now, we are going to create a Bucket and test that is working.
     ```
 
 - Get the status of the MR in K8s:
-    
+
     ```bash
     kubectl get buckets.s3.aws.crossplane.io # or kubectl describe bucket -w
 
@@ -49,8 +49,8 @@ Now, we are going to create a Bucket and test that is working.
     my-bucket   True    True     2m22s
     ```
 
-- Check that the bucket has been created in localstack:
-    
+- Check that the bucket has been created in localstack.
+
     ```bash
     awslocal s3api list-buckets
 
@@ -75,13 +75,13 @@ Now, we are going to create a Bucket and test that is working.
 Finally, delete the resource created.
 
 - To cleanup, delete the bucket as any other Kubernetes object.
-    
+
     ```bash
     kubectl delete bucket my-bucket
     ```
 
 - Check that the bucket has been deleted in localstack:
-    
+
     ```bash
     awslocal s3api list-buckets
 
@@ -107,8 +107,8 @@ Composite Resources are designed to let you build your own platform with your ow
 
 First step, we have to create a composition for our Object Storage block so users will use it.
 
-- Create a ```CompositeResourceDefinition``` for our Object Storage:
-    
+- Create a ```CompositeResourceDefinition``` for our Object Storage.
+
     ```bash
     cat <<EOF | kubectl apply -f -
     apiVersion: apiextensions.crossplane.io/v1
@@ -146,8 +146,8 @@ First step, we have to create a composition for our Object Storage block so user
     EOF
     ```
 
-- You can find a new CRD as part of the rest of CRDs:
-    
+- You can find a new CRD as part of the rest of CRDs.
+
     ```bash
     kubectl get crds | grep xdostorages
 
@@ -156,7 +156,7 @@ First step, we have to create a composition for our Object Storage block so user
     ```
 
 - Create a ```Composition``` for our Object Storage that will use a ```buckets.s3.aws.crossplane.io``` MR:
-    
+
     ```bash
     cat <<EOF | kubectl apply -f -
     apiVersion: apiextensions.crossplane.io/v1
@@ -191,8 +191,8 @@ First step, we have to create a composition for our Object Storage block so user
     EOF
     ```
 
-- You can find a new composition:
-    
+- You can find a new composition.
+
     ```bash
     kubectl get composition | grep xdostorages
 
@@ -205,7 +205,7 @@ First step, we have to create a composition for our Object Storage block so user
 Second step, user will create a claim for the Storage composition.
 
 - Create a ```CompositeResourceDefinition``` for our Object Storage:
-    
+
     ```bash
     cat <<EOF | kubectl apply -f -
     apiVersion: storage.acw.alvsanand.github.io/v1alpha1
@@ -222,8 +222,8 @@ Second step, user will create a claim for the Storage composition.
     EOF
     ```
 
-- Check that the xdostorages is created:
-    
+- Check that the xdostorages is created.
+
     ```bash
     kubectl get xdostorages
 
@@ -232,8 +232,8 @@ Second step, user will create a claim for the Storage composition.
     some-bucket   True    xdostorages.aws.storage.acw.alvsanand.github.io   89s
     ```
 
-- Check that the bucket object is created:
-    
+- Check that the bucket object is created.
+
     ```bash
     kubectl get bucket
 
@@ -242,8 +242,8 @@ Second step, user will create a claim for the Storage composition.
     some-bucket-acw   True    True     113s
     ```
 
-- Check that the bucket has been created in localstack:
-    
+- Check that the bucket has been created in localstack.
+
     ```bash
     awslocal s3api list-buckets
 
@@ -266,18 +266,18 @@ Second step, user will create a claim for the Storage composition.
 
 Last step, delete all resources created.
 
-- Delete all the resources:
-    
+- Delete all the resources.
+
     ```bash
     kubectl delete xdostorages some-bucket
-    
+
     kubectl delete composition xdostorages.aws.storage.acw.alvsanand.github.io
-    
+
     kubectl delete crds xdostorages.storage.acw.alvsanand.github.io
     ```
 
-- Check that the bucket has been created in localstack:
-    
+- Check that the bucket has been created in localstack.
+
     ```bash
     awslocal s3api list-buckets
 
@@ -301,14 +301,14 @@ In the last part of the laboratory, we will cover [Configurations](https://cross
 
 Firstly, we have to create the package with the required resources in you local machine.
 
-- Create a temporal directory for our package:
-    
+- Create a temporal directory for our package.
+
     ```bash
     PACKAGE_DIR=$(mktemp -d) && cd $PACKAGE_DIR
     ```
 
-- Create a ```CompositeResourceDefinition``` file:
-    
+- Create a ```CompositeResourceDefinition``` file.
+
     ```bash
     cat > definition.yaml <<EOF
     apiVersion: apiextensions.crossplane.io/v1
@@ -346,8 +346,8 @@ Firstly, we have to create the package with the required resources in you local 
     EOF
     ```
 
-- Create a ```Composition``` file:
-    
+- Create a ```Composition``` file.
+
     ```bash
     cat > composition.yaml <<EOF
     apiVersion: apiextensions.crossplane.io/v1
@@ -382,8 +382,8 @@ Firstly, we have to create the package with the required resources in you local 
     EOF
     ```
 
-- Create a ```Configuration``` file:
-    
+- Create a ```Configuration``` file.
+
     ```bash
     cat > crossplane.yaml <<EOF
     apiVersion: meta.pkg.crossplane.io/v1
@@ -403,13 +403,13 @@ Firstly, we have to create the package with the required resources in you local 
     ```
 
 - Build the package configuration.
-    
+
     ```bash
     kubectl crossplane build configuration --name acw-storage
     ```
 
 - Create a package configuration image.
-    
+
     ```bash
     IMAGE_ID=$(docker load -i acw-storage.xpkg | sed 's|Loaded image ID: ||')
 
@@ -419,7 +419,7 @@ Firstly, we have to create the package with the required resources in you local 
     ```
 
 - Create the configuration in order to have XDObjectStorage available.
-    
+
     ```bash
     cat <<EOF | kubectl apply -f -
     apiVersion: pkg.crossplane.io/v1
@@ -449,8 +449,8 @@ Firstly, we have to create the package with the required resources in you local 
 
 Secondly, user will create a claim for the Storage composition but this time loaded from a Configuration package.
 
-- Create a ```CompositeResourceDefinition``` for our Object Storage:
-    
+- Create a ```CompositeResourceDefinition``` for our Object Storage.
+
     ```bash
     cat <<EOF | kubectl apply -f -
     apiVersion: storage.acw.alvsanand.github.io/v1alpha1
@@ -467,8 +467,8 @@ Secondly, user will create a claim for the Storage composition but this time loa
     EOF
     ```
 
-- Check that the xdostorages is created:
-    
+- Check that the xdostorages is created.
+
     ```bash
     kubectl get xdostorages
 
@@ -477,8 +477,8 @@ Secondly, user will create a claim for the Storage composition but this time loa
     some-bucket   True    xdostorages.aws.storage.acw.alvsanand.github.io   89s
     ```
 
-- Check that the bucket object is created:
-    
+- Check that the bucket object is created.
+
     ```bash
     kubectl get bucket
 
@@ -487,8 +487,8 @@ Secondly, user will create a claim for the Storage composition but this time loa
     some-bucket-acw   True    True     113s
     ```
 
-- Check that the bucket has been created in localstack:
-    
+- Check that the bucket has been created in localstack.
+
     ```bash
     awslocal s3api list-buckets
 
@@ -512,19 +512,19 @@ Secondly, user will create a claim for the Storage composition but this time loa
 Finally, delete all resources created.
 
 - Delete all the resources:
-    
+
     ```bash
     kubectl delete xdostorages some-bucket
-    
+
     kubectl delete composition xdostorages.aws.storage.acw.alvsanand.github.io
-    
+
     kubectl delete crds xdostorages.storage.acw.alvsanand.github.io
-    
+
     kubectl delete configuration acw-storage-configuration
     ```
 
-- Check that the bucket has been created in localstack:
-    
+- Check that the bucket has been created in localstack.
+
     ```bash
     awslocal s3api list-buckets
 

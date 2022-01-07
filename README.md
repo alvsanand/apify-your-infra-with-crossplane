@@ -10,10 +10,10 @@ The documentation of this project is created using [MkDocs](https://www.mkdocs.o
 
 ### Generate site
 
-- Install dependencies:
+- Install dependencies.
 
         ```sh
-        pip install mkdocs-material
+        pip install -U mkdocs-material
         ```
 
 ### Launch site locally
@@ -21,8 +21,8 @@ The documentation of this project is created using [MkDocs](https://www.mkdocs.o
 - Start server
 
         ```sh
-        yarn install
         mkdocs serve
+        ```
 
 ## Thanks
 
