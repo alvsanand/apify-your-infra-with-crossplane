@@ -18,9 +18,9 @@ A Managed Resource (MR) is Crossplane’s representation of a resource in an ext
 
 For example, Bucket in the AWS Provider corresponds to an actual S3 Bucket in AWS. There is a one-to-one relationship and the changes on managed resources are reflected directly on the corresponding resource in the provider. You can see all available managed resources running this command ```kubectl get crds | grep aws | sort``` and the API specification in the [documentation](https://doc.crds.dev/github.com/crossplane/provider-aws).
 
-### 1.1 Create a S3 Bucket
+### 1.1 Simple MR
 
-Now, we are going to create a Bucket and test that is working.
+Now, we are going to create a S3 Bucket and test that is working.
 
 - Create the MR for the bucket.
 
@@ -50,7 +50,7 @@ Now, we are going to create a Bucket and test that is working.
     my-bucket   True    True     2m22s
     ```
 
-- Check that the bucket has been created in localstack.
+- Check that the bucket has been created in LocalStack.
 
     ```bash
     awslocal s3api list-buckets
@@ -70,28 +70,385 @@ Now, we are going to create a Bucket and test that is working.
     }
     ```
 
-### 1.2 Cleanup the MR
+### 1.3 Complex MRs
 
-Finally, delete the resource created.
+For making things a little more interesting, it is time to create several MRs that have dependencies between them. This time we are going to create several MRs that are related: ```VPC -> Subnet -> Security Group -> EC2 Instance```.
 
-- To cleanup, delete the bucket as any other Kubernetes object.
+!!! tip
+    In order to solve dependencies among resources created by Crossplane, you should search into the API of the providers for the attributes that ends with ```Ref``` or ```Selector```.
+
+- Create the VPC.
+
+    ```bash
+    cat <<EOF | kubectl apply -f -
+    apiVersion: ec2.aws.crossplane.io/v1beta1
+    kind: VPC
+    metadata:
+      name: acw-vpc
+    spec:
+      forProvider:
+        region: us-east-1
+        cidrBlock: 10.0.0.0/16
+        enableDnsSupport: true
+        enableDnsHostNames: true
+        instanceTenancy: default
+      providerConfigRef:
+        name: default
+    EOF
+    ```
+
+- Create a Subnet.
+
+    ```bash
+    cat <<EOF | kubectl apply -f -
+    apiVersion: ec2.aws.crossplane.io/v1beta1
+    kind: Subnet
+    metadata:
+      name: acw-vpc-subnet1
+    spec:
+      forProvider:
+        region: us-east-1
+        availabilityZone: us-east-1b
+        cidrBlock: 10.0.1.0/24
+        vpcIdRef:
+          name: acw-vpc
+        mapPublicIPOnLaunch: true
+      providerConfigRef:
+        name: default
+    EOF
+    ```
+
+- Create a Security Group.
+
+    ```bash
+    cat <<EOF | kubectl apply -f -
+    apiVersion: ec2.aws.crossplane.io/v1beta1
+    kind: SecurityGroup
+    metadata:
+      name: acw-instance-sg
+    spec:
+      forProvider:
+        region: us-east-1
+        vpcIdRef:
+          name: acw-vpc  
+        groupName: acw-instance-sg
+        description: ACW Security Group for an Instance
+        egress:
+          - fromPort: 443
+            toPort: 443
+            ipProtocol: tcp
+            ipRanges:
+              - cidrIp: 10.0.0.0/8
+      providerConfigRef:
+        name: default
+    EOF
+    ```
+
+- Create a Ec2 Instance.
+
+    ```bash
+    cat <<EOF | kubectl apply -f -
+    apiVersion: ec2.aws.crossplane.io/v1alpha1
+    kind: Instance
+    metadata:
+      name: acw-instance
+    spec:
+      forProvider:
+        region: us-east-1
+        imageId: ami-0dc2d3e4c0f9ebd18
+        securityGroupRefs:
+          - name: acw-instance-sg
+        subnetIdRef:
+          name: acw-vpc-subnet1
+      providerConfigRef:
+        name: default
+    EOF
+    ```
+
+- Get the status of the MRs in K8s:
+
+    ```bash
+    kubectl get vpc
+    
+    kubectl get subnet
+
+    kubectl get securitygroup
+
+    kubectl get instance
+    ```
+
+- Check that the resources has been created in LocalStack.
+
+    ```bash
+    awslocal ec2 describe-vpcs
+
+    awslocal ec2 describe-subnets
+
+    awslocal ec2 describe-security-groups
+
+    awslocal ec2 describe-instances
+
+    ...
+    {
+        "Reservations": [
+            {
+                "Groups": [],
+                "Instances": [
+                    {
+                        "AmiLaunchIndex": 0,
+                        "ImageId": "ami-0dc2d3e4c0f9ebd18",
+                        "InstanceId": "i-f731721dac1e3f8fa",
+                        "InstanceType": "m1.small",
+                        "KernelId": "None",
+                        "KeyName": "None",
+                        "LaunchTime": "2022-01-08T16:33:01.000Z",
+                        "Monitoring": {
+                            "State": "disabled"
+                        },
+                        "Placement": {
+                            "AvailabilityZone": "us-east-1b",
+                            "GroupName": "",
+                            "Tenancy": "default"
+                        },
+                        "PrivateDnsName": "ip-10-0-1-4.ec2.internal",
+                        "PrivateIpAddress": "10.0.1.4",
+                        "ProductCodes": [],
+                        "PublicDnsName": "ec2-54-214-103-229.compute-1.amazonaws.com",
+                        "PublicIpAddress": "54.214.103.229",
+                        "State": {
+                            "Code": 16,
+                            "Name": "running"
+                        },
+                        "StateTransitionReason": "",
+                        "SubnetId": "subnet-746ff808",
+                        "VpcId": "vpc-55faade5",
+                        "Architecture": "x86_64",
+                        "BlockDeviceMappings": [
+                            {
+                                "DeviceName": "/dev/sda1",
+                                "Ebs": {
+                                    "AttachTime": "2022-01-08T16:33:01.000Z",
+                                    "DeleteOnTermination": true,
+                                    "Status": "in-use",
+                                    "VolumeId": "vol-9f7d8500"
+                                }
+                            }
+                        ],
+                        "ClientToken": "ABCDE0000000000003",
+                        "EbsOptimized": false,
+                        "Hypervisor": "xen",
+                        "NetworkInterfaces": [
+                            {
+                                "Association": {
+                                    "IpOwnerId": "000000000000",
+                                    "PublicIp": "54.214.103.229"
+                                },
+                                "Attachment": {
+                                    "AttachTime": "2015-01-01T00:00:00Z",
+                                    "AttachmentId": "eni-attach-23ddc790",
+                                    "DeleteOnTermination": true,
+                                    "DeviceIndex": 0,
+                                    "Status": "attached"
+                                },
+                                "Description": "Primary network interface",
+                                "Groups": [
+                                    {
+                                        "GroupName": "acw-instance-sg",
+                                        "GroupId": "sg-ffeeea4d068c6649a"
+                                    }
+                                ],
+                                "MacAddress": "1b:2b:3c:4d:5e:6f",
+                                "NetworkInterfaceId": "eni-3c4ecfd4",
+                                "OwnerId": "000000000000",
+                                "PrivateIpAddress": "10.0.1.4",
+                                "PrivateIpAddresses": [
+                                    {
+                                        "Association": {
+                                            "IpOwnerId": "000000000000",
+                                            "PublicIp": "54.214.103.229"
+                                        },
+                                        "Primary": true,
+                                        "PrivateIpAddress": "10.0.1.4"
+                                    }
+                                ],
+                                "SourceDestCheck": true,
+                                "Status": "in-use",
+                                "SubnetId": "subnet-746ff808",
+                                "VpcId": "vpc-55faade5"
+                            }
+                        ],
+                        "RootDeviceName": "/dev/sda1",
+                        "RootDeviceType": "ebs",
+                        "SecurityGroups": [
+                            {
+                                "GroupName": "acw-instance-sg",
+                                "GroupId": "sg-ffeeea4d068c6649a"
+                            }
+                        ],
+                        "SourceDestCheck": true,
+                        "StateReason": {
+                            "Code": "",
+                            "Message": ""
+                        },
+                        "Tags": [
+                            {
+                                "Key": "crossplane-kind",
+                                "Value": "instance.ec2.aws.crossplane.io"
+                            },
+                            {
+                                "Key": "crossplane-name",
+                                "Value": "acw-instance"
+                            },
+                            {
+                                "Key": "crossplane-providerconfig",
+                                "Value": "default"
+                            }
+                        ],
+                        "VirtualizationType": "paravirtual"
+                    }
+                ],
+                "OwnerId": "000000000000",
+                "ReservationId": "r-c137140b"
+            }
+        ]
+    }
+    ```
+
+### 1.2 Cleanup the MRs
+
+Finally, we are going to delete the resources created before.
+
+- To cleanup, delete all the resources using the API of Kubernetes.
 
     ```bash
     kubectl delete bucket my-bucket
+
+    kubectl delete instance acw-instance
+    
+    kubectl delete securitygroup acw-instance-sg
+
+    kubectl delete subnet acw-vpc-subnet1
+
+    kubectl delete vpc acw-vpc
     ```
 
-- Check that the bucket has been deleted in localstack:
+- Check that the resources has been deleted in LocalStack except the instances that are in state ```Terminated```:
 
     ```bash
     awslocal s3api list-buckets
 
+    awslocal ec2 describe-vpcs
+
+    awslocal ec2 describe-subnets
+
+    awslocal ec2 describe-security-groups
+
+    awslocal ec2 describe-instances
+
     ...
     {
-        "Buckets": [],
-        "Owner": {
-            "DisplayName": "webfile",
-            "ID": "bcaf1ffd86f41161ca5fb16fd081034f"
-        }
+        "Reservations": [
+            {
+                "Groups": [],
+                "Instances": [
+                    {
+                        "AmiLaunchIndex": 0,
+                        "ImageId": "ami-0dc2d3e4c0f9ebd18",
+                        "InstanceId": "i-f731721dac1e3f8fa",
+                        "InstanceType": "m1.small",
+                        "KernelId": "None",
+                        "KeyName": "None",
+                        "LaunchTime": "2022-01-08T16:33:01.000Z",
+                        "Monitoring": {
+                            "State": "disabled"
+                        },
+                        "Placement": {
+                            "AvailabilityZone": "us-east-1b",
+                            "GroupName": "",
+                            "Tenancy": "default"
+                        },
+                        "PrivateDnsName": "ip-10-0-1-4.ec2.internal",
+                        "PrivateIpAddress": "10.0.1.4",
+                        "ProductCodes": [],
+                        "PublicDnsName": "None",
+                        "State": {
+                            "Code": 48,
+                            "Name": "terminated"
+                        },
+                        "StateTransitionReason": "User initiated (2022-01-08 16:37:38 UTC)",
+                        "SubnetId": "subnet-746ff808",
+                        "VpcId": "vpc-55faade5",
+                        "Architecture": "x86_64",
+                        "BlockDeviceMappings": [],
+                        "ClientToken": "ABCDE0000000000003",
+                        "EbsOptimized": false,
+                        "Hypervisor": "xen",
+                        "NetworkInterfaces": [
+                            {
+                                "Attachment": {
+                                    "AttachTime": "2015-01-01T00:00:00Z",
+                                    "AttachmentId": "eni-attach-23ddc790",
+                                    "DeleteOnTermination": true,
+                                    "DeviceIndex": 0,
+                                    "Status": "attached"
+                                },
+                                "Description": "Primary network interface",
+                                "Groups": [
+                                    {
+                                        "GroupName": "acw-instance-sg",
+                                        "GroupId": "sg-ffeeea4d068c6649a"
+                                    }
+                                ],
+                                "MacAddress": "1b:2b:3c:4d:5e:6f",
+                                "NetworkInterfaceId": "eni-3c4ecfd4",
+                                "OwnerId": "000000000000",
+                                "PrivateIpAddress": "10.0.1.4",
+                                "PrivateIpAddresses": [
+                                    {
+                                        "Primary": true,
+                                        "PrivateIpAddress": "10.0.1.4"
+                                    }
+                                ],
+                                "SourceDestCheck": true,
+                                "Status": "in-use",
+                                "SubnetId": "subnet-746ff808",
+                                "VpcId": "vpc-55faade5"
+                            }
+                        ],
+                        "RootDeviceName": "/dev/sda1",
+                        "RootDeviceType": "ebs",
+                        "SecurityGroups": [
+                            {
+                                "GroupName": "acw-instance-sg",
+                                "GroupId": "sg-ffeeea4d068c6649a"
+                            }
+                        ],
+                        "SourceDestCheck": true,
+                        "StateReason": {
+                            "Code": "Client.UserInitiatedShutdown",
+                            "Message": "Client.UserInitiatedShutdown: User initiated shutdown"
+                        },
+                        "Tags": [
+                            {
+                                "Key": "crossplane-kind",
+                                "Value": "instance.ec2.aws.crossplane.io"
+                            },
+                            {
+                                "Key": "crossplane-name",
+                                "Value": "acw-instance"
+                            },
+                            {
+                                "Key": "crossplane-providerconfig",
+                                "Value": "default"
+                            }
+                        ],
+                        "VirtualizationType": "paravirtual"
+                    }
+                ],
+                "OwnerId": "000000000000",
+                "ReservationId": "r-c137140b"
+            }
+        ]
     }
     ```
 
@@ -103,11 +460,13 @@ Crossplane Composite Resources (XR) are opinionated Kubernetes Custom Resources 
 
 Composite Resources are designed to let you build your own platform with your own opinionated concepts and APIs without needing to write a Kubernetes controller from scratch. Instead, you define the schema of your XR and teach Crossplane which Managed Resources it should compose (i.e. create) when someone creates the XR you defined.
 
-### 2.1 Create a composition
+In our laboratory, we are going to provide to the users a Object storage resource abstracting them the actual implementation that is done our current cloud.
 
-First step, we have to create a composition for our Object Storage block so users will use it.
+### 2.1 XD and Composition
 
-- Create a ```CompositeResourceDefinition``` for our Object Storage.
+First step, we have to create a composition for the Object Storage.
+
+- Create a ```CompositeResourceDefinition```.
 
     ```bash
     cat <<EOF | kubectl apply -f -
@@ -155,7 +514,7 @@ First step, we have to create a composition for our Object Storage block so user
     xdostorages.storage.acw.alvsanand.github.io                2022-01-05T12:42:05Z
     ```
 
-- Create a ```Composition``` for our Object Storage that will use a ```buckets.s3.aws.crossplane.io``` MR:
+- Create a ```Composition``` for that definition. It will use a ```buckets.s3.aws.crossplane.io``` MR of the AWS provider:
 
     ```bash
     cat <<EOF | kubectl apply -f -
@@ -191,7 +550,7 @@ First step, we have to create a composition for our Object Storage block so user
     EOF
     ```
 
-- You can find a new composition.
+- Finally, you can find a new composition.
 
     ```bash
     kubectl get composition | grep xdostorages
@@ -200,9 +559,9 @@ First step, we have to create a composition for our Object Storage block so user
     xdostorages.aws.storage.acw.alvsanand.github.io   27s
     ```
 
-### 2.2 Create a claim
+### 2.2 Resource Claim
 
-Second step, user will create a claim for the Storage composition.
+Second step, user will create a claim for the Object Storage composition.
 
 - Create a ```CompositeResourceDefinition``` for our Object Storage:
 
@@ -232,7 +591,7 @@ Second step, user will create a claim for the Storage composition.
     some-bucket   True    xdostorages.aws.storage.acw.alvsanand.github.io   89s
     ```
 
-- Check that the bucket object is created.
+- Check that the S3 bucket object is created.
 
     ```bash
     kubectl get bucket
@@ -242,7 +601,7 @@ Second step, user will create a claim for the Storage composition.
     some-bucket-acw   True    True     113s
     ```
 
-- Check that the bucket has been created in localstack.
+- Check that the S3 bucket has been created in LocalStack.
 
     ```bash
     awslocal s3api list-buckets
@@ -276,7 +635,7 @@ Last step, delete all resources created.
     kubectl delete crds xdostorages.storage.acw.alvsanand.github.io
     ```
 
-- Check that the bucket has been created in localstack.
+- Check that the bucket has been created in LocalStack.
 
     ```bash
     awslocal s3api list-buckets
@@ -297,7 +656,7 @@ Crossplane packages are opinionated OCI images that contain a stream of YAML tha
 
 In the last part of the laboratory, we will cover [Configurations](https://crossplane.io/docs/v1.6/concepts/packages.html#configuration-packages).
 
-### 3.1 Create a Configuration package
+### 3.1 Configuration Package
 
 Firstly, we have to create the package with the required resources in you local machine.
 
@@ -445,7 +804,7 @@ Firstly, we have to create the package with the required resources in you local 
     kubectl get composition | grep xdostorages
     ```
 
-### 3.2 Create a claim again
+### 3.2 Resource Claim again
 
 Secondly, user will create a claim for the Storage composition but this time loaded from a Configuration package.
 
@@ -487,7 +846,7 @@ Secondly, user will create a claim for the Storage composition but this time loa
     some-bucket-acw   True    True     113s
     ```
 
-- Check that the bucket has been created in localstack.
+- Check that the bucket has been created in LocalStack.
 
     ```bash
     awslocal s3api list-buckets
@@ -523,7 +882,7 @@ Finally, delete all resources created.
     kubectl delete configuration acw-storage-configuration
     ```
 
-- Check that the bucket has been created in localstack.
+- Check that the bucket has been created in LocalStack.
 
     ```bash
     awslocal s3api list-buckets

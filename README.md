@@ -31,4 +31,4 @@ I would like to thank to:
 - [Crossplane](https://crossplane.io/) project.
 - [Upbound](https://blog.upbound.io/introducing-crossplane-open-source-multicloud-control-plane/).
 - [Daniel Mangum](https://danielmangum.com/posts/crossplane-infrastructure-llvm/).
-- [Localstack](https://localstack.cloud/) project.
+- [LocalStack](https://localstack.cloud/) project.

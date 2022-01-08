@@ -4,6 +4,8 @@ hide:
 ---
 # Lab 3 - Implement GitOps
 
+![Crossplane and ArgoCD](assets/images/crossplane-argo.png)
+
 GitOps is a set of practices to manage infrastructure and application configurations using Git, an open source version control system. GitOps works by using Git as a single source of truth for declarative infrastructure and applications. The Git repository contains the entire state of the system so that the trail of changes to the system state are visible and auditable.
 
 Using GitOps tool such as Argo CD or Flux CD, we will be able to make our target system match the desired state that is coded in the Git repository. So when we will deploy new resources or update an existing ones, after updating the repository the automated process will apply the changes.
@@ -441,7 +443,7 @@ Now that the changes are in Git, ArgoCD will detect the chances and sync our inf
     some-bucket-acw   True    True     113s
     ```
 
-- Check that the bucket has been created in localstack.
+- Check that the bucket has been created in LocalStack.
 
     ```bash
     awslocal s3api list-buckets
@@ -471,7 +473,7 @@ Last step, delete all resources created. In this case, we should delete the appl
     kubectl delete application -n argocd acw-storage
     ```
 
-- Check that the bucket has been created in localstack.
+- Check that the bucket has been created in LocalStack.
 
     ```bash
     awslocal s3api list-buckets

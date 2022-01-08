@@ -8,7 +8,7 @@ In the first lab, you will setup your computer for the following laboratories. H
 
 - Local Kubernetes cluster
 - Crossplane
-- [Localstack](https://localstack.cloud/)
+- [LocalStack](https://localstack.cloud/)
 
 ## 0. Requisites
 
@@ -173,11 +173,15 @@ Although there are many easy of ways for deploying a Kubernetes cluster ([Docker
     ...
     ```
 
-## 3. Localstack
+## 3. LocalStack
 
-In order to simulate AWS cloud, we will use [Localstack](https://localstack.cloud/).
+![LocalStack](assets/images/localstack.svg){ style="height:120px" align=left }
 
-- Install localstack helm.
+In order to simulate AWS cloud, we will use [LocalStack](https://localstack.cloud/).
+
+[LocalStack](https://localstack.cloud/) computer is a cloud service emulator that runs in a single container on your laptop or in your CI environment. With LocalStack, you can run your AWS applications or Lambdas entirely on your local machine without connecting to a remote cloud provider!
+
+- Install LocalStack helm.
 
     ```bash
     kubectl create namespace awslocal
@@ -188,7 +192,7 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     helm upgrade --install localstack localstack-repo/localstack -n awslocal
     ```
 
-- Wait until localstack is ready.
+- Wait until LocalStack is ready.
 
     ```bash
     kubectl get all -n awslocal
@@ -207,7 +211,7 @@ In order to simulate AWS cloud, we will use [Localstack](https://localstack.clou
     replicaset.apps/localstack-6fb5dd88d7   1         1         1       4m2s
     ```
 
-- Configure localstack to your be accessive by your local machine.
+- Configure LocalStack to your be accessible by your local machine.
 
     ```bash
     kubectl port-forward -n awslocal service/localstack 34566:4566 > /dev/null 2>&1 &
