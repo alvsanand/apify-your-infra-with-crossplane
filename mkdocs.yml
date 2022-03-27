@@ -1,12 +1,12 @@
-site_name: Another Crossplane Workshop
-site_url: https://alvsanand.github.io/another-crossplane-workshop/
+site_name: APIfy your infra with Crossplane
+site_url: https://alvsanand.github.io/apify-your-infra-with-crossplane/
 site_author: Álvaro Santos Andrés
 site_description: >-
-  Learning material for Another Crossplane Workshop
+  Learning material for APIfy your infra with Crossplane
 
 # Repository
-repo_name: alvsanand/another-crossplane-workshop
-repo_url: https://github.com/alvsanand/another-crossplane-workshop
+repo_name: alvsanand/apify-your-infra-with-crossplane
+repo_url: https://github.com/alvsanand/apify-your-infra-with-crossplane
 edit_uri: ""
 
 # Configuration

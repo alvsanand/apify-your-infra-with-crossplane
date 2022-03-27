@@ -163,7 +163,7 @@ After the repository is created, we should create an [Application](https://argo-
         path: .
       destination:
         server: https://kubernetes.default.svc
-        namespace: another-crossplane-workshop
+        namespace: apify-your-infra-with-crossplane
       syncPolicy:
         automated: {}
     EOF
@@ -310,7 +310,7 @@ Now that the changes are in Git, ArgoCD will detect the chances and sync our inf
       UID:               24016e22-b199-4ed4-9f2b-6ce96018f798
     Spec:
       Destination:
-        Namespace:  another-crossplane-workshop
+        Namespace:  apify-your-infra-with-crossplane
         Server:     https://kubernetes.default.svc
       Project:      default
       Source:
@@ -350,7 +350,7 @@ Now that the changes are in Git, ArgoCD will detect the chances and sync our inf
             Kind:        Composition
             Message:     composition.apiextensions.crossplane.io/xdostorages.aws.storage.acw.alvsanand.github.io created
             Name:        xdostorages.aws.storage.acw.alvsanand.github.io
-            Namespace:   another-crossplane-workshop
+            Namespace:   apify-your-infra-with-crossplane
             Status:      Synced
             Sync Phase:  Sync
             Version:     v1
@@ -359,7 +359,7 @@ Now that the changes are in Git, ArgoCD will detect the chances and sync our inf
             Kind:        CompositeResourceDefinition
             Message:     compositeresourcedefinition.apiextensions.crossplane.io/xdostorages.storage.acw.alvsanand.github.io created
             Name:        xdostorages.storage.acw.alvsanand.github.io
-            Namespace:   another-crossplane-workshop
+            Namespace:   apify-your-infra-with-crossplane
             Status:      Synced
             Sync Phase:  Sync
             Version:     v1
@@ -368,7 +368,7 @@ Now that the changes are in Git, ArgoCD will detect the chances and sync our inf
             Kind:        XDObjectStorage
             Message:     xdobjectstorage.storage.acw.alvsanand.github.io/some-bucket created
             Name:        some-bucket
-            Namespace:   another-crossplane-workshop
+            Namespace:   apify-your-infra-with-crossplane
             Status:      Synced
             Sync Phase:  Sync
             Version:     v1alpha1
@@ -399,7 +399,7 @@ Now that the changes are in Git, ArgoCD will detect the chances and sync our inf
       Sync:
         Compared To:
           Destination:
-            Namespace:  another-crossplane-workshop
+            Namespace:  apify-your-infra-with-crossplane
             Server:     https://kubernetes.default.svc
           Source:
             Path:             .

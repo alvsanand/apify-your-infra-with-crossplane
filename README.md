@@ -1,8 +1,8 @@
-# Another Crossplane Workshop
+# APIfy your infra with Crossplane
 
-This is the learning material for **Another Crossplane Workshop**.
+This is the learning material for **APIfy your infra with Crossplane** meetup.
 
-In order to begin with go to this [link](https://alvsanand.github.io/distributed-tracing-workshop/).
+In order to begin with go to this [link](https://alvsanand.github.io/apify-your-infra-with-crossplane//).
 
 ## Mkdocs website
 
