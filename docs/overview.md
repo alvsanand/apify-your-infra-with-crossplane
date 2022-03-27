@@ -75,7 +75,7 @@ Crossplane will enable us a lot of possibilities:
 
 ![Upbound](assets/images/upbound.jpg){ align=left }
 
-[Upbound](https://www.upbound.io/) is the company behind Crossplane.Upbound’s product offerings are available via a subscription model that currently has two tiers. The first is a free tier catering to individuals getting started with control planes and who need tooling to debug and share their Crossplane providers and configurations.
+[Upbound](https://www.upbound.io/) is the company behind Crossplane. Upbound’s product offerings are available via a subscription model that currently has two tiers. The first is a free tier catering to individuals getting started with control planes and who need tooling to debug and share their Crossplane providers and configurations.
 
 It includes full access to Universal Crossplane (UXP), the ability to publish public listings in Upbound Registry, and limited access to Upbound Cloud. Upbound’s enterprise tier unlocks additional value across the product portfolio. Platform teams can manage unlimited control planes in Upbound Cloud, create unlimited private listings in Upbound Registry, and get access to 24/7 support, prioritized bug fixes, implementation services, onboarding and training.
 

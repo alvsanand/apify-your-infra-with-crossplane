@@ -45,7 +45,7 @@ Although there are many easy of ways for deploying a Kubernetes cluster ([Docker
 - Obtain the local IP address of your computer.
 
     ```bash
-    LOCAL_IP=$(ifconfig eth0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}')
+    LOCAL_IP=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')
     ```
 
 - [Add](https://stackoverflow.com/a/63227959) "LOCAL_IP:5432" to "insecure-registries" in Docker.
