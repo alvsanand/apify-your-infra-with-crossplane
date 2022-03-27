@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://alvsanand.github.io/apify-your-infra-with-crossplane/</loc>
+         <lastmod>2022-03-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alvsanand.github.io/apify-your-infra-with-crossplane/implement-gitops/</loc>
+         <lastmod>2022-03-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alvsanand.github.io/apify-your-infra-with-crossplane/know-the-basis/</loc>
+         <lastmod>2022-03-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alvsanand.github.io/apify-your-infra-with-crossplane/overview/</loc>
+         <lastmod>2022-03-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alvsanand.github.io/apify-your-infra-with-crossplane/setup/</loc>
+         <lastmod>2022-03-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+</urlset>

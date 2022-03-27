@@ -1,0 +1,2235 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Learning material for APIfy your infra with Crossplane">
+      
+      
+        <meta name="author" content="Álvaro Santos Andrés">
+      
+      
+        <link rel="canonical" href="https://alvsanand.github.io/apify-your-infra-with-crossplane/know-the-basis/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.8">
+    
+    
+      
+        <title>Lab 2 - Know the basis - APIfy your infra with Crossplane</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.644de097.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-2-know-the-basis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="APIfy your infra with Crossplane" class="md-header__button md-logo" aria-label="APIfy your infra with Crossplane" data-md-component="logo">
+      
+  <img src="../assets/images/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            APIfy your infra with Crossplane
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 2 - Know the basis
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/alvsanand/apify-your-infra-with-crossplane" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    alvsanand/apify-your-infra-with-crossplane
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../overview/" class="md-tabs__link">
+      Overview
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../setup/" class="md-tabs__link">
+      Lab 1 - Setup
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="./" class="md-tabs__link md-tabs__link--active">
+      Lab 2 - Know the basis
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../implement-gitops/" class="md-tabs__link">
+      Lab 3 - Implement GitOps
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="APIfy your infra with Crossplane" class="md-nav__button md-logo" aria-label="APIfy your infra with Crossplane" data-md-component="logo">
+      
+  <img src="../assets/images/favicon.png" alt="logo">
+
+    </a>
+    APIfy your infra with Crossplane
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/alvsanand/apify-your-infra-with-crossplane" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    alvsanand/apify-your-infra-with-crossplane
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        Lab 1 - Setup
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Lab 2 - Know the basis
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Lab 2 - Know the basis
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-managed-resources" class="md-nav__link">
+    1. Managed resources
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Managed resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-simple-mr" class="md-nav__link">
+    1.1 Simple MR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-complex-mrs" class="md-nav__link">
+    1.3 Complex MRs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-cleanup-the-mrs" class="md-nav__link">
+    1.2 Cleanup the MRs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-compositions" class="md-nav__link">
+    2. Compositions
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Compositions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-xd-and-composition" class="md-nav__link">
+    2.1 XD and Composition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-resource-claim" class="md-nav__link">
+    2.2 Resource Claim
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-cleanup-the-composition" class="md-nav__link">
+    2.3 Cleanup the Composition
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-packages" class="md-nav__link">
+    3. Packages
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-configuration-package" class="md-nav__link">
+    3.1 Configuration Package
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-resource-claim-again" class="md-nav__link">
+    3.2 Resource Claim again
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-cleanup-the-package" class="md-nav__link">
+    3.3 Cleanup the Package
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implement-gitops/" class="md-nav__link">
+        Lab 3 - Implement GitOps
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-managed-resources" class="md-nav__link">
+    1. Managed resources
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Managed resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-simple-mr" class="md-nav__link">
+    1.1 Simple MR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-complex-mrs" class="md-nav__link">
+    1.3 Complex MRs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-cleanup-the-mrs" class="md-nav__link">
+    1.2 Cleanup the MRs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-compositions" class="md-nav__link">
+    2. Compositions
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Compositions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-xd-and-composition" class="md-nav__link">
+    2.1 XD and Composition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-resource-claim" class="md-nav__link">
+    2.2 Resource Claim
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-cleanup-the-composition" class="md-nav__link">
+    2.3 Cleanup the Composition
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-packages" class="md-nav__link">
+    3. Packages
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-configuration-package" class="md-nav__link">
+    3.1 Configuration Package
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-resource-claim-again" class="md-nav__link">
+    3.2 Resource Claim again
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-cleanup-the-package" class="md-nav__link">
+    3.3 Cleanup the Package
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="lab-2-know-the-basis">Lab 2 - Know the basis</h1>
+<p>In the second laboratory, we are going to see the essentials of Crossplane:</p>
+<ul>
+<li><a href="https://crossplane.io/docs/v1.6/concepts/managed-resources.html">Managed Resources</a></li>
+<li><a href="https://crossplane.io/docs/v1.6/concepts/composition.html">Compositions</a></li>
+<li><a href="https://crossplane.io/docs/v1.6/concepts/packages.html">Packages</a></li>
+</ul>
+<h2 id="1-managed-resources">1. Managed resources</h2>
+<p><img align="right" alt="Managed Resources" src="../assets/images/crossplane-mrs.png" style="width:500px" /></p>
+<p>A Managed Resource (MR) is Crossplane’s representation of a resource in an external system - most commonly a cloud provider. They are the building blocks of Crossplane.</p>
+<p>For example, Bucket in the AWS Provider corresponds to an actual S3 Bucket in AWS. There is a one-to-one relationship and the changes on managed resources are reflected directly on the corresponding resource in the provider. You can see all available managed resources running this command <code>kubectl get crds | grep aws | sort</code> and the API specification in the <a href="https://doc.crds.dev/github.com/crossplane/provider-aws">documentation</a>.</p>
+<h3 id="11-simple-mr">1.1 Simple MR</h3>
+<p>Now, we are going to create a S3 Bucket and test that is working.</p>
+<ul>
+<li>
+<p>Create the MR for the bucket.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: s3.aws.crossplane.io/v1beta1</span>
+<span class="s">kind: Bucket</span>
+<span class="s">metadata:</span>
+<span class="s">    name: my-bucket</span>
+<span class="s">spec:</span>
+<span class="s">    forProvider:</span>
+<span class="s">        # Bucket parameters</span>
+<span class="s">        acl: public-read-write</span>
+<span class="s">        locationConstraint: us-east-1</span>
+<span class="s">    providerConfigRef:</span>
+<span class="s">        name: default</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Get the status of the MR in K8s:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl get buckets.s3.aws.crossplane.io <span class="c1"># or kubectl describe bucket -w</span>
+
+...
+NAME        READY   SYNCED   AGE
+my-bucket   True    True     2m22s
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check that the bucket has been created in LocalStack.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>awslocal s3api list-buckets
+
+...
+<span class="o">{</span>
+    <span class="s2">&quot;Buckets&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;my-bucket&quot;</span>,
+            <span class="s2">&quot;CreationDate&quot;</span>: <span class="s2">&quot;2022-01-05T12:14:49.000Z&quot;</span>
+        <span class="o">}</span>
+    <span class="o">]</span>,
+    <span class="s2">&quot;Owner&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;DisplayName&quot;</span>: <span class="s2">&quot;webfile&quot;</span>,
+        <span class="s2">&quot;ID&quot;</span>: <span class="s2">&quot;bcaf1ffd86f41161ca5fb16fd081034f&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+</ul>
+<h3 id="13-complex-mrs">1.3 Complex MRs</h3>
+<p>For making things a little more interesting, it is time to create several MRs that have dependencies between them. This time we are going to create several MRs that are related: <code>VPC -&gt; Subnet -&gt; Security Group -&gt; EC2 Instance</code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In order to solve dependencies among resources created by Crossplane, you should search into the API of the providers for the attributes that ends with <code>Ref</code> or <code>Selector</code>.</p>
+</div>
+<ul>
+<li>
+<p>Create the VPC.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: ec2.aws.crossplane.io/v1beta1</span>
+<span class="s">kind: VPC</span>
+<span class="s">metadata:</span>
+<span class="s">  name: acw-vpc</span>
+<span class="s">spec:</span>
+<span class="s">  forProvider:</span>
+<span class="s">    region: us-east-1</span>
+<span class="s">    cidrBlock: 10.0.0.0/16</span>
+<span class="s">    enableDnsSupport: true</span>
+<span class="s">    enableDnsHostNames: true</span>
+<span class="s">    instanceTenancy: default</span>
+<span class="s">  providerConfigRef:</span>
+<span class="s">    name: default</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Create a Subnet.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: ec2.aws.crossplane.io/v1beta1</span>
+<span class="s">kind: Subnet</span>
+<span class="s">metadata:</span>
+<span class="s">  name: acw-vpc-subnet1</span>
+<span class="s">spec:</span>
+<span class="s">  forProvider:</span>
+<span class="s">    region: us-east-1</span>
+<span class="s">    availabilityZone: us-east-1b</span>
+<span class="s">    cidrBlock: 10.0.1.0/24</span>
+<span class="s">    vpcIdRef:</span>
+<span class="s">      name: acw-vpc</span>
+<span class="s">    mapPublicIPOnLaunch: true</span>
+<span class="s">  providerConfigRef:</span>
+<span class="s">    name: default</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Create a Security Group.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: ec2.aws.crossplane.io/v1beta1</span>
+<span class="s">kind: SecurityGroup</span>
+<span class="s">metadata:</span>
+<span class="s">  name: acw-instance-sg</span>
+<span class="s">spec:</span>
+<span class="s">  forProvider:</span>
+<span class="s">    region: us-east-1</span>
+<span class="s">    vpcIdRef:</span>
+<span class="s">      name: acw-vpc  </span>
+<span class="s">    groupName: acw-instance-sg</span>
+<span class="s">    description: ACW Security Group for an Instance</span>
+<span class="s">    egress:</span>
+<span class="s">      - fromPort: 443</span>
+<span class="s">        toPort: 443</span>
+<span class="s">        ipProtocol: tcp</span>
+<span class="s">        ipRanges:</span>
+<span class="s">          - cidrIp: 10.0.0.0/8</span>
+<span class="s">  providerConfigRef:</span>
+<span class="s">    name: default</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Create a Ec2 Instance.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: ec2.aws.crossplane.io/v1alpha1</span>
+<span class="s">kind: Instance</span>
+<span class="s">metadata:</span>
+<span class="s">  name: acw-instance</span>
+<span class="s">spec:</span>
+<span class="s">  forProvider:</span>
+<span class="s">    region: us-east-1</span>
+<span class="s">    imageId: ami-0dc2d3e4c0f9ebd18</span>
+<span class="s">    securityGroupRefs:</span>
+<span class="s">      - name: acw-instance-sg</span>
+<span class="s">    subnetIdRef:</span>
+<span class="s">      name: acw-vpc-subnet1</span>
+<span class="s">  providerConfigRef:</span>
+<span class="s">    name: default</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Get the status of the MRs in K8s:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl get vpc
+
+kubectl get subnet
+
+kubectl get securitygroup
+
+kubectl get instance
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check that the resources has been created in LocalStack.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>awslocal ec2 describe-vpcs
+
+awslocal ec2 describe-subnets
+
+awslocal ec2 describe-security-groups
+
+awslocal ec2 describe-instances
+
+...
+<span class="o">{</span>
+    <span class="s2">&quot;Reservations&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&quot;Groups&quot;</span>: <span class="o">[]</span>,
+            <span class="s2">&quot;Instances&quot;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&quot;AmiLaunchIndex&quot;</span>: <span class="m">0</span>,
+                    <span class="s2">&quot;ImageId&quot;</span>: <span class="s2">&quot;ami-0dc2d3e4c0f9ebd18&quot;</span>,
+                    <span class="s2">&quot;InstanceId&quot;</span>: <span class="s2">&quot;i-f731721dac1e3f8fa&quot;</span>,
+                    <span class="s2">&quot;InstanceType&quot;</span>: <span class="s2">&quot;m1.small&quot;</span>,
+                    <span class="s2">&quot;KernelId&quot;</span>: <span class="s2">&quot;None&quot;</span>,
+                    <span class="s2">&quot;KeyName&quot;</span>: <span class="s2">&quot;None&quot;</span>,
+                    <span class="s2">&quot;LaunchTime&quot;</span>: <span class="s2">&quot;2022-01-08T16:33:01.000Z&quot;</span>,
+                    <span class="s2">&quot;Monitoring&quot;</span>: <span class="o">{</span>
+                        <span class="s2">&quot;State&quot;</span>: <span class="s2">&quot;disabled&quot;</span>
+                    <span class="o">}</span>,
+                    <span class="s2">&quot;Placement&quot;</span>: <span class="o">{</span>
+                        <span class="s2">&quot;AvailabilityZone&quot;</span>: <span class="s2">&quot;us-east-1b&quot;</span>,
+                        <span class="s2">&quot;GroupName&quot;</span>: <span class="s2">&quot;&quot;</span>,
+                        <span class="s2">&quot;Tenancy&quot;</span>: <span class="s2">&quot;default&quot;</span>
+                    <span class="o">}</span>,
+                    <span class="s2">&quot;PrivateDnsName&quot;</span>: <span class="s2">&quot;ip-10-0-1-4.ec2.internal&quot;</span>,
+                    <span class="s2">&quot;PrivateIpAddress&quot;</span>: <span class="s2">&quot;10.0.1.4&quot;</span>,
+                    <span class="s2">&quot;ProductCodes&quot;</span>: <span class="o">[]</span>,
+                    <span class="s2">&quot;PublicDnsName&quot;</span>: <span class="s2">&quot;ec2-54-214-103-229.compute-1.amazonaws.com&quot;</span>,
+                    <span class="s2">&quot;PublicIpAddress&quot;</span>: <span class="s2">&quot;54.214.103.229&quot;</span>,
+                    <span class="s2">&quot;State&quot;</span>: <span class="o">{</span>
+                        <span class="s2">&quot;Code&quot;</span>: <span class="m">16</span>,
+                        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;running&quot;</span>
+                    <span class="o">}</span>,
+                    <span class="s2">&quot;StateTransitionReason&quot;</span>: <span class="s2">&quot;&quot;</span>,
+                    <span class="s2">&quot;SubnetId&quot;</span>: <span class="s2">&quot;subnet-746ff808&quot;</span>,
+                    <span class="s2">&quot;VpcId&quot;</span>: <span class="s2">&quot;vpc-55faade5&quot;</span>,
+                    <span class="s2">&quot;Architecture&quot;</span>: <span class="s2">&quot;x86_64&quot;</span>,
+                    <span class="s2">&quot;BlockDeviceMappings&quot;</span>: <span class="o">[</span>
+                        <span class="o">{</span>
+                            <span class="s2">&quot;DeviceName&quot;</span>: <span class="s2">&quot;/dev/sda1&quot;</span>,
+                            <span class="s2">&quot;Ebs&quot;</span>: <span class="o">{</span>
+                                <span class="s2">&quot;AttachTime&quot;</span>: <span class="s2">&quot;2022-01-08T16:33:01.000Z&quot;</span>,
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span>: true,
+                                <span class="s2">&quot;Status&quot;</span>: <span class="s2">&quot;in-use&quot;</span>,
+                                <span class="s2">&quot;VolumeId&quot;</span>: <span class="s2">&quot;vol-9f7d8500&quot;</span>
+                            <span class="o">}</span>
+                        <span class="o">}</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&quot;ClientToken&quot;</span>: <span class="s2">&quot;ABCDE0000000000003&quot;</span>,
+                    <span class="s2">&quot;EbsOptimized&quot;</span>: false,
+                    <span class="s2">&quot;Hypervisor&quot;</span>: <span class="s2">&quot;xen&quot;</span>,
+                    <span class="s2">&quot;NetworkInterfaces&quot;</span>: <span class="o">[</span>
+                        <span class="o">{</span>
+                            <span class="s2">&quot;Association&quot;</span>: <span class="o">{</span>
+                                <span class="s2">&quot;IpOwnerId&quot;</span>: <span class="s2">&quot;000000000000&quot;</span>,
+                                <span class="s2">&quot;PublicIp&quot;</span>: <span class="s2">&quot;54.214.103.229&quot;</span>
+                            <span class="o">}</span>,
+                            <span class="s2">&quot;Attachment&quot;</span>: <span class="o">{</span>
+                                <span class="s2">&quot;AttachTime&quot;</span>: <span class="s2">&quot;2015-01-01T00:00:00Z&quot;</span>,
+                                <span class="s2">&quot;AttachmentId&quot;</span>: <span class="s2">&quot;eni-attach-23ddc790&quot;</span>,
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span>: true,
+                                <span class="s2">&quot;DeviceIndex&quot;</span>: <span class="m">0</span>,
+                                <span class="s2">&quot;Status&quot;</span>: <span class="s2">&quot;attached&quot;</span>
+                            <span class="o">}</span>,
+                            <span class="s2">&quot;Description&quot;</span>: <span class="s2">&quot;Primary network interface&quot;</span>,
+                            <span class="s2">&quot;Groups&quot;</span>: <span class="o">[</span>
+                                <span class="o">{</span>
+                                    <span class="s2">&quot;GroupName&quot;</span>: <span class="s2">&quot;acw-instance-sg&quot;</span>,
+                                    <span class="s2">&quot;GroupId&quot;</span>: <span class="s2">&quot;sg-ffeeea4d068c6649a&quot;</span>
+                                <span class="o">}</span>
+                            <span class="o">]</span>,
+                            <span class="s2">&quot;MacAddress&quot;</span>: <span class="s2">&quot;1b:2b:3c:4d:5e:6f&quot;</span>,
+                            <span class="s2">&quot;NetworkInterfaceId&quot;</span>: <span class="s2">&quot;eni-3c4ecfd4&quot;</span>,
+                            <span class="s2">&quot;OwnerId&quot;</span>: <span class="s2">&quot;000000000000&quot;</span>,
+                            <span class="s2">&quot;PrivateIpAddress&quot;</span>: <span class="s2">&quot;10.0.1.4&quot;</span>,
+                            <span class="s2">&quot;PrivateIpAddresses&quot;</span>: <span class="o">[</span>
+                                <span class="o">{</span>
+                                    <span class="s2">&quot;Association&quot;</span>: <span class="o">{</span>
+                                        <span class="s2">&quot;IpOwnerId&quot;</span>: <span class="s2">&quot;000000000000&quot;</span>,
+                                        <span class="s2">&quot;PublicIp&quot;</span>: <span class="s2">&quot;54.214.103.229&quot;</span>
+                                    <span class="o">}</span>,
+                                    <span class="s2">&quot;Primary&quot;</span>: true,
+                                    <span class="s2">&quot;PrivateIpAddress&quot;</span>: <span class="s2">&quot;10.0.1.4&quot;</span>
+                                <span class="o">}</span>
+                            <span class="o">]</span>,
+                            <span class="s2">&quot;SourceDestCheck&quot;</span>: true,
+                            <span class="s2">&quot;Status&quot;</span>: <span class="s2">&quot;in-use&quot;</span>,
+                            <span class="s2">&quot;SubnetId&quot;</span>: <span class="s2">&quot;subnet-746ff808&quot;</span>,
+                            <span class="s2">&quot;VpcId&quot;</span>: <span class="s2">&quot;vpc-55faade5&quot;</span>
+                        <span class="o">}</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&quot;RootDeviceName&quot;</span>: <span class="s2">&quot;/dev/sda1&quot;</span>,
+                    <span class="s2">&quot;RootDeviceType&quot;</span>: <span class="s2">&quot;ebs&quot;</span>,
+                    <span class="s2">&quot;SecurityGroups&quot;</span>: <span class="o">[</span>
+                        <span class="o">{</span>
+                            <span class="s2">&quot;GroupName&quot;</span>: <span class="s2">&quot;acw-instance-sg&quot;</span>,
+                            <span class="s2">&quot;GroupId&quot;</span>: <span class="s2">&quot;sg-ffeeea4d068c6649a&quot;</span>
+                        <span class="o">}</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&quot;SourceDestCheck&quot;</span>: true,
+                    <span class="s2">&quot;StateReason&quot;</span>: <span class="o">{</span>
+                        <span class="s2">&quot;Code&quot;</span>: <span class="s2">&quot;&quot;</span>,
+                        <span class="s2">&quot;Message&quot;</span>: <span class="s2">&quot;&quot;</span>
+                    <span class="o">}</span>,
+                    <span class="s2">&quot;Tags&quot;</span>: <span class="o">[</span>
+                        <span class="o">{</span>
+                            <span class="s2">&quot;Key&quot;</span>: <span class="s2">&quot;crossplane-kind&quot;</span>,
+                            <span class="s2">&quot;Value&quot;</span>: <span class="s2">&quot;instance.ec2.aws.crossplane.io&quot;</span>
+                        <span class="o">}</span>,
+                        <span class="o">{</span>
+                            <span class="s2">&quot;Key&quot;</span>: <span class="s2">&quot;crossplane-name&quot;</span>,
+                            <span class="s2">&quot;Value&quot;</span>: <span class="s2">&quot;acw-instance&quot;</span>
+                        <span class="o">}</span>,
+                        <span class="o">{</span>
+                            <span class="s2">&quot;Key&quot;</span>: <span class="s2">&quot;crossplane-providerconfig&quot;</span>,
+                            <span class="s2">&quot;Value&quot;</span>: <span class="s2">&quot;default&quot;</span>
+                        <span class="o">}</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&quot;VirtualizationType&quot;</span>: <span class="s2">&quot;paravirtual&quot;</span>
+                <span class="o">}</span>
+            <span class="o">]</span>,
+            <span class="s2">&quot;OwnerId&quot;</span>: <span class="s2">&quot;000000000000&quot;</span>,
+            <span class="s2">&quot;ReservationId&quot;</span>: <span class="s2">&quot;r-c137140b&quot;</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+</ul>
+<h3 id="12-cleanup-the-mrs">1.2 Cleanup the MRs</h3>
+<p>Finally, we are going to delete the resources created before.</p>
+<ul>
+<li>
+<p>To cleanup, delete all the resources using the API of Kubernetes.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl delete bucket my-bucket
+
+kubectl delete instance acw-instance
+
+kubectl delete securitygroup acw-instance-sg
+
+kubectl delete subnet acw-vpc-subnet1
+
+kubectl delete vpc acw-vpc
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check that the resources has been deleted in LocalStack except the instances that are in state <code>Terminated</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>awslocal s3api list-buckets
+
+awslocal ec2 describe-vpcs
+
+awslocal ec2 describe-subnets
+
+awslocal ec2 describe-security-groups
+
+awslocal ec2 describe-instances
+
+...
+<span class="o">{</span>
+    <span class="s2">&quot;Reservations&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&quot;Groups&quot;</span>: <span class="o">[]</span>,
+            <span class="s2">&quot;Instances&quot;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&quot;AmiLaunchIndex&quot;</span>: <span class="m">0</span>,
+                    <span class="s2">&quot;ImageId&quot;</span>: <span class="s2">&quot;ami-0dc2d3e4c0f9ebd18&quot;</span>,
+                    <span class="s2">&quot;InstanceId&quot;</span>: <span class="s2">&quot;i-f731721dac1e3f8fa&quot;</span>,
+                    <span class="s2">&quot;InstanceType&quot;</span>: <span class="s2">&quot;m1.small&quot;</span>,
+                    <span class="s2">&quot;KernelId&quot;</span>: <span class="s2">&quot;None&quot;</span>,
+                    <span class="s2">&quot;KeyName&quot;</span>: <span class="s2">&quot;None&quot;</span>,
+                    <span class="s2">&quot;LaunchTime&quot;</span>: <span class="s2">&quot;2022-01-08T16:33:01.000Z&quot;</span>,
+                    <span class="s2">&quot;Monitoring&quot;</span>: <span class="o">{</span>
+                        <span class="s2">&quot;State&quot;</span>: <span class="s2">&quot;disabled&quot;</span>
+                    <span class="o">}</span>,
+                    <span class="s2">&quot;Placement&quot;</span>: <span class="o">{</span>
+                        <span class="s2">&quot;AvailabilityZone&quot;</span>: <span class="s2">&quot;us-east-1b&quot;</span>,
+                        <span class="s2">&quot;GroupName&quot;</span>: <span class="s2">&quot;&quot;</span>,
+                        <span class="s2">&quot;Tenancy&quot;</span>: <span class="s2">&quot;default&quot;</span>
+                    <span class="o">}</span>,
+                    <span class="s2">&quot;PrivateDnsName&quot;</span>: <span class="s2">&quot;ip-10-0-1-4.ec2.internal&quot;</span>,
+                    <span class="s2">&quot;PrivateIpAddress&quot;</span>: <span class="s2">&quot;10.0.1.4&quot;</span>,
+                    <span class="s2">&quot;ProductCodes&quot;</span>: <span class="o">[]</span>,
+                    <span class="s2">&quot;PublicDnsName&quot;</span>: <span class="s2">&quot;None&quot;</span>,
+                    <span class="s2">&quot;State&quot;</span>: <span class="o">{</span>
+                        <span class="s2">&quot;Code&quot;</span>: <span class="m">48</span>,
+                        <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;terminated&quot;</span>
+                    <span class="o">}</span>,
+                    <span class="s2">&quot;StateTransitionReason&quot;</span>: <span class="s2">&quot;User initiated (2022-01-08 16:37:38 UTC)&quot;</span>,
+                    <span class="s2">&quot;SubnetId&quot;</span>: <span class="s2">&quot;subnet-746ff808&quot;</span>,
+                    <span class="s2">&quot;VpcId&quot;</span>: <span class="s2">&quot;vpc-55faade5&quot;</span>,
+                    <span class="s2">&quot;Architecture&quot;</span>: <span class="s2">&quot;x86_64&quot;</span>,
+                    <span class="s2">&quot;BlockDeviceMappings&quot;</span>: <span class="o">[]</span>,
+                    <span class="s2">&quot;ClientToken&quot;</span>: <span class="s2">&quot;ABCDE0000000000003&quot;</span>,
+                    <span class="s2">&quot;EbsOptimized&quot;</span>: false,
+                    <span class="s2">&quot;Hypervisor&quot;</span>: <span class="s2">&quot;xen&quot;</span>,
+                    <span class="s2">&quot;NetworkInterfaces&quot;</span>: <span class="o">[</span>
+                        <span class="o">{</span>
+                            <span class="s2">&quot;Attachment&quot;</span>: <span class="o">{</span>
+                                <span class="s2">&quot;AttachTime&quot;</span>: <span class="s2">&quot;2015-01-01T00:00:00Z&quot;</span>,
+                                <span class="s2">&quot;AttachmentId&quot;</span>: <span class="s2">&quot;eni-attach-23ddc790&quot;</span>,
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span>: true,
+                                <span class="s2">&quot;DeviceIndex&quot;</span>: <span class="m">0</span>,
+                                <span class="s2">&quot;Status&quot;</span>: <span class="s2">&quot;attached&quot;</span>
+                            <span class="o">}</span>,
+                            <span class="s2">&quot;Description&quot;</span>: <span class="s2">&quot;Primary network interface&quot;</span>,
+                            <span class="s2">&quot;Groups&quot;</span>: <span class="o">[</span>
+                                <span class="o">{</span>
+                                    <span class="s2">&quot;GroupName&quot;</span>: <span class="s2">&quot;acw-instance-sg&quot;</span>,
+                                    <span class="s2">&quot;GroupId&quot;</span>: <span class="s2">&quot;sg-ffeeea4d068c6649a&quot;</span>
+                                <span class="o">}</span>
+                            <span class="o">]</span>,
+                            <span class="s2">&quot;MacAddress&quot;</span>: <span class="s2">&quot;1b:2b:3c:4d:5e:6f&quot;</span>,
+                            <span class="s2">&quot;NetworkInterfaceId&quot;</span>: <span class="s2">&quot;eni-3c4ecfd4&quot;</span>,
+                            <span class="s2">&quot;OwnerId&quot;</span>: <span class="s2">&quot;000000000000&quot;</span>,
+                            <span class="s2">&quot;PrivateIpAddress&quot;</span>: <span class="s2">&quot;10.0.1.4&quot;</span>,
+                            <span class="s2">&quot;PrivateIpAddresses&quot;</span>: <span class="o">[</span>
+                                <span class="o">{</span>
+                                    <span class="s2">&quot;Primary&quot;</span>: true,
+                                    <span class="s2">&quot;PrivateIpAddress&quot;</span>: <span class="s2">&quot;10.0.1.4&quot;</span>
+                                <span class="o">}</span>
+                            <span class="o">]</span>,
+                            <span class="s2">&quot;SourceDestCheck&quot;</span>: true,
+                            <span class="s2">&quot;Status&quot;</span>: <span class="s2">&quot;in-use&quot;</span>,
+                            <span class="s2">&quot;SubnetId&quot;</span>: <span class="s2">&quot;subnet-746ff808&quot;</span>,
+                            <span class="s2">&quot;VpcId&quot;</span>: <span class="s2">&quot;vpc-55faade5&quot;</span>
+                        <span class="o">}</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&quot;RootDeviceName&quot;</span>: <span class="s2">&quot;/dev/sda1&quot;</span>,
+                    <span class="s2">&quot;RootDeviceType&quot;</span>: <span class="s2">&quot;ebs&quot;</span>,
+                    <span class="s2">&quot;SecurityGroups&quot;</span>: <span class="o">[</span>
+                        <span class="o">{</span>
+                            <span class="s2">&quot;GroupName&quot;</span>: <span class="s2">&quot;acw-instance-sg&quot;</span>,
+                            <span class="s2">&quot;GroupId&quot;</span>: <span class="s2">&quot;sg-ffeeea4d068c6649a&quot;</span>
+                        <span class="o">}</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&quot;SourceDestCheck&quot;</span>: true,
+                    <span class="s2">&quot;StateReason&quot;</span>: <span class="o">{</span>
+                        <span class="s2">&quot;Code&quot;</span>: <span class="s2">&quot;Client.UserInitiatedShutdown&quot;</span>,
+                        <span class="s2">&quot;Message&quot;</span>: <span class="s2">&quot;Client.UserInitiatedShutdown: User initiated shutdown&quot;</span>
+                    <span class="o">}</span>,
+                    <span class="s2">&quot;Tags&quot;</span>: <span class="o">[</span>
+                        <span class="o">{</span>
+                            <span class="s2">&quot;Key&quot;</span>: <span class="s2">&quot;crossplane-kind&quot;</span>,
+                            <span class="s2">&quot;Value&quot;</span>: <span class="s2">&quot;instance.ec2.aws.crossplane.io&quot;</span>
+                        <span class="o">}</span>,
+                        <span class="o">{</span>
+                            <span class="s2">&quot;Key&quot;</span>: <span class="s2">&quot;crossplane-name&quot;</span>,
+                            <span class="s2">&quot;Value&quot;</span>: <span class="s2">&quot;acw-instance&quot;</span>
+                        <span class="o">}</span>,
+                        <span class="o">{</span>
+                            <span class="s2">&quot;Key&quot;</span>: <span class="s2">&quot;crossplane-providerconfig&quot;</span>,
+                            <span class="s2">&quot;Value&quot;</span>: <span class="s2">&quot;default&quot;</span>
+                        <span class="o">}</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&quot;VirtualizationType&quot;</span>: <span class="s2">&quot;paravirtual&quot;</span>
+                <span class="o">}</span>
+            <span class="o">]</span>,
+            <span class="s2">&quot;OwnerId&quot;</span>: <span class="s2">&quot;000000000000&quot;</span>,
+            <span class="s2">&quot;ReservationId&quot;</span>: <span class="s2">&quot;r-c137140b&quot;</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+</ul>
+<h2 id="2-compositions">2. Compositions</h2>
+<p>Crossplane Composite Resources (XR) are opinionated Kubernetes Custom Resources that are composed of Managed Resources. We often call them XRs for short.</p>
+<p><img alt="Crossplane Compostion" src="../assets/images/crossplane-xrs-and-mrs.svg" /></p>
+<p>Composite Resources are designed to let you build your own platform with your own opinionated concepts and APIs without needing to write a Kubernetes controller from scratch. Instead, you define the schema of your XR and teach Crossplane which Managed Resources it should compose (i.e. create) when someone creates the XR you defined.</p>
+<p>In our laboratory, we are going to provide to the users a Object storage resource abstracting them the actual implementation that is done our current cloud.</p>
+<h3 id="21-xd-and-composition">2.1 XD and Composition</h3>
+<p>First step, we have to create a composition for the Object Storage.</p>
+<ul>
+<li>
+<p>Create a <code>CompositeResourceDefinition</code>.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: apiextensions.crossplane.io/v1</span>
+<span class="s">kind: CompositeResourceDefinition</span>
+<span class="s">metadata:</span>
+<span class="s">    name: xdostorages.storage.acw.alvsanand.github.io</span>
+<span class="s">spec:</span>
+<span class="s">    group: storage.acw.alvsanand.github.io</span>
+<span class="s">    names:</span>
+<span class="s">        kind: XDObjectStorage</span>
+<span class="s">        plural: xdostorages</span>
+<span class="s">    claimNames:</span>
+<span class="s">        kind: ObjectStorage</span>
+<span class="s">        plural: ostorages</span>
+<span class="s">    versions:</span>
+<span class="s">        - name: v1alpha1</span>
+<span class="s">          served: true</span>
+<span class="s">          referenceable: true</span>
+<span class="s">          schema:</span>
+<span class="s">              openAPIV3Schema:</span>
+<span class="s">                  type: object</span>
+<span class="s">                  properties:</span>
+<span class="s">                      spec:</span>
+<span class="s">                          type: object</span>
+<span class="s">                          properties:</span>
+<span class="s">                              parameters:</span>
+<span class="s">                                  type: object</span>
+<span class="s">                                  properties:</span>
+<span class="s">                                      storageName:</span>
+<span class="s">                                          type: string</span>
+<span class="s">                                  required:</span>
+<span class="s">                                      - storageName</span>
+<span class="s">                          required:</span>
+<span class="s">                              - parameters</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>You can find a new CRD as part of the rest of CRDs.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl get crds <span class="p">|</span> grep xdostorages
+
+...
+xdostorages.storage.acw.alvsanand.github.io                <span class="m">2022</span>-01-05T12:42:05Z
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Create a <code>Composition</code> for that definition. It will use a <code>buckets.s3.aws.crossplane.io</code> MR of the AWS provider:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: apiextensions.crossplane.io/v1</span>
+<span class="s">kind: Composition</span>
+<span class="s">metadata:</span>
+<span class="s">    name: xdostorages.aws.storage.acw.alvsanand.github.io</span>
+<span class="s">    labels:</span>
+<span class="s">        serviceType: storage</span>
+<span class="s">        provider: aws</span>
+<span class="s">spec:</span>
+<span class="s">    compositeTypeRef:</span>
+<span class="s">        apiVersion: storage.acw.alvsanand.github.io/v1alpha1</span>
+<span class="s">        kind: XDObjectStorage</span>
+<span class="s">    resources:</span>
+<span class="s">        - name: s3bucket</span>
+<span class="s">          base:</span>
+<span class="s">              apiVersion: s3.aws.crossplane.io/v1beta1</span>
+<span class="s">              kind: Bucket</span>
+<span class="s">              spec:</span>
+<span class="s">                  forProvider:</span>
+<span class="s">                      acl: public-read-write</span>
+<span class="s">                      locationConstraint: us-east-1</span>
+<span class="s">                  providerConfigRef:</span>
+<span class="s">                      name: default</span>
+<span class="s">          patches:</span>
+<span class="s">              - fromFieldPath: &quot;spec.parameters.storageName&quot;</span>
+<span class="s">                toFieldPath: &quot;metadata.name&quot;</span>
+<span class="s">                transforms:</span>
+<span class="s">                    - type: string</span>
+<span class="s">                      string:</span>
+<span class="s">                          fmt: &quot;%s-acw&quot;</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Finally, you can find a new composition.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl get composition <span class="p">|</span> grep xdostorages
+
+...
+xdostorages.aws.storage.acw.alvsanand.github.io   27s
+</code></pre></div>
+</td></tr></table>
+</li>
+</ul>
+<h3 id="22-resource-claim">2.2 Resource Claim</h3>
+<p>Second step, user will create a claim for the Object Storage composition.</p>
+<ul>
+<li>
+<p>Create a <code>CompositeResourceDefinition</code> for our Object Storage:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: storage.acw.alvsanand.github.io/v1alpha1</span>
+<span class="s">kind: XDObjectStorage</span>
+<span class="s">metadata:</span>
+<span class="s">    name: some-bucket</span>
+<span class="s">    namespace: default</span>
+<span class="s">spec:</span>
+<span class="s">    compositionSelector:</span>
+<span class="s">        matchLabels:</span>
+<span class="s">            provider: aws</span>
+<span class="s">    parameters:</span>
+<span class="s">        storageName: some-bucket</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check that the xdostorages is created.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl get xdostorages
+
+...
+NAME          READY   COMPOSITION                                       AGE
+some-bucket   True    xdostorages.aws.storage.acw.alvsanand.github.io   89s
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check that the S3 bucket object is created.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl get bucket
+
+...
+NAME              READY   SYNCED   AGE
+some-bucket-acw   True    True     113s
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check that the S3 bucket has been created in LocalStack.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>awslocal s3api list-buckets
+
+...
+<span class="o">{</span>
+    <span class="s2">&quot;Buckets&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;some-bucket-acw&quot;</span>,
+            <span class="s2">&quot;CreationDate&quot;</span>: <span class="s2">&quot;2022-01-05T15:36:06.000Z&quot;</span>
+        <span class="o">}</span>
+    <span class="o">]</span>,
+    <span class="s2">&quot;Owner&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;DisplayName&quot;</span>: <span class="s2">&quot;webfile&quot;</span>,
+        <span class="s2">&quot;ID&quot;</span>: <span class="s2">&quot;bcaf1ffd86f41161ca5fb16fd081034f&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+</ul>
+<h3 id="23-cleanup-the-composition">2.3 Cleanup the Composition</h3>
+<p>Last step, delete all resources created.</p>
+<ul>
+<li>
+<p>Delete all the resources.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl delete xdostorages some-bucket
+
+kubectl delete composition xdostorages.aws.storage.acw.alvsanand.github.io
+
+kubectl delete crds xdostorages.storage.acw.alvsanand.github.io
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check that the bucket has been created in LocalStack.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>awslocal s3api list-buckets
+
+...
+<span class="o">{</span>
+    <span class="s2">&quot;Buckets&quot;</span>: <span class="o">[]</span>,
+    <span class="s2">&quot;Owner&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;DisplayName&quot;</span>: <span class="s2">&quot;webfile&quot;</span>,
+        <span class="s2">&quot;ID&quot;</span>: <span class="s2">&quot;bcaf1ffd86f41161ca5fb16fd081034f&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+</ul>
+<h2 id="3-packages">3. Packages</h2>
+<p>Crossplane packages are opinionated OCI images that contain a stream of YAML that can be parsed by the Crossplane package manager. Crossplane packages come in two varieties: Providers and Configurations. They vary in the types of resources they may contain in their packages.</p>
+<p>In the last part of the laboratory, we will cover <a href="https://crossplane.io/docs/v1.6/concepts/packages.html#configuration-packages">Configurations</a>.</p>
+<h3 id="31-configuration-package">3.1 Configuration Package</h3>
+<p>Firstly, we have to create the package with the required resources in you local machine.</p>
+<ul>
+<li>
+<p>Create a temporal directory for our package.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nv">PACKAGE_DIR</span><span class="o">=</span><span class="k">$(</span>mktemp -d<span class="k">)</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$PACKAGE_DIR</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Create a <code>CompositeResourceDefinition</code> file.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat &gt; definition.yaml <span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: apiextensions.crossplane.io/v1</span>
+<span class="s">kind: CompositeResourceDefinition</span>
+<span class="s">metadata:</span>
+<span class="s">    name: xdostorages.storage.acw.alvsanand.github.io</span>
+<span class="s">spec:</span>
+<span class="s">    group: storage.acw.alvsanand.github.io</span>
+<span class="s">    names:</span>
+<span class="s">        kind: XDObjectStorage</span>
+<span class="s">        plural: xdostorages</span>
+<span class="s">    claimNames:</span>
+<span class="s">        kind: ObjectStorage</span>
+<span class="s">        plural: ostorages</span>
+<span class="s">    versions:</span>
+<span class="s">        - name: v1alpha1</span>
+<span class="s">          served: true</span>
+<span class="s">          referenceable: true</span>
+<span class="s">          schema:</span>
+<span class="s">              openAPIV3Schema:</span>
+<span class="s">                  type: object</span>
+<span class="s">                  properties:</span>
+<span class="s">                      spec:</span>
+<span class="s">                          type: object</span>
+<span class="s">                          properties:</span>
+<span class="s">                              parameters:</span>
+<span class="s">                                  type: object</span>
+<span class="s">                                  properties:</span>
+<span class="s">                                      storageName:</span>
+<span class="s">                                          type: string</span>
+<span class="s">                                  required:</span>
+<span class="s">                                      - storageName</span>
+<span class="s">                          required:</span>
+<span class="s">                              - parameters</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Create a <code>Composition</code> file.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat &gt; composition.yaml <span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: apiextensions.crossplane.io/v1</span>
+<span class="s">kind: Composition</span>
+<span class="s">metadata:</span>
+<span class="s">    name: xdostorages.aws.storage.acw.alvsanand.github.io</span>
+<span class="s">    labels:</span>
+<span class="s">        serviceType: storage</span>
+<span class="s">        provider: aws</span>
+<span class="s">spec:</span>
+<span class="s">    compositeTypeRef:</span>
+<span class="s">        apiVersion: storage.acw.alvsanand.github.io/v1alpha1</span>
+<span class="s">        kind: XDObjectStorage</span>
+<span class="s">    resources:</span>
+<span class="s">        - name: s3bucket</span>
+<span class="s">          base:</span>
+<span class="s">              apiVersion: s3.aws.crossplane.io/v1beta1</span>
+<span class="s">              kind: Bucket</span>
+<span class="s">              spec:</span>
+<span class="s">                  forProvider:</span>
+<span class="s">                      acl: public-read-write</span>
+<span class="s">                      locationConstraint: us-east-1</span>
+<span class="s">                  providerConfigRef:</span>
+<span class="s">                      name: default</span>
+<span class="s">          patches:</span>
+<span class="s">              - fromFieldPath: &quot;spec.parameters.storageName&quot;</span>
+<span class="s">                toFieldPath: &quot;metadata.name&quot;</span>
+<span class="s">                transforms:</span>
+<span class="s">                    - type: string</span>
+<span class="s">                      string:</span>
+<span class="s">                          fmt: &quot;%s-acw&quot;</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Create a <code>Configuration</code> file.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat &gt; crossplane.yaml <span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: meta.pkg.crossplane.io/v1</span>
+<span class="s">kind: Configuration</span>
+<span class="s">metadata:</span>
+<span class="s">  name: acw-storage</span>
+<span class="s">  annotations:</span>
+<span class="s">    serviceType: storage</span>
+<span class="s">    provider: aws</span>
+<span class="s">spec:</span>
+<span class="s">  crossplane:</span>
+<span class="s">    version: &quot;&gt;=v1.0.0-0&quot;</span>
+<span class="s">  dependsOn:</span>
+<span class="s">    - provider: crossplane/provider-aws</span>
+<span class="s">      version: &quot;&gt;=v0.20.0&quot;</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Build the package configuration.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl crossplane build configuration --name acw-storage
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Create a package configuration image.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nv">IMAGE_ID</span><span class="o">=</span><span class="k">$(</span>docker load -i acw-storage.xpkg <span class="p">|</span> sed <span class="s1">&#39;s|Loaded image ID: ||&#39;</span><span class="k">)</span>
+
+docker tag <span class="nv">$IMAGE_ID</span> <span class="nv">$LOCAL_IP</span>:5432/acw/storage:v0.1.0
+
+docker push <span class="nv">$LOCAL_IP</span>:5432/acw/storage:v0.1.0
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Create the configuration in order to have XDObjectStorage available.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: pkg.crossplane.io/v1</span>
+<span class="s">kind: Configuration</span>
+<span class="s">metadata:</span>
+<span class="s">  name: acw-storage-configuration</span>
+<span class="s">spec:</span>
+<span class="s">  package: $LOCAL_IP:5432/acw/storage:v0.1.0</span>
+<span class="s">  packagePullPolicy: IfNotPresent</span>
+<span class="s">  revisionActivationPolicy: Automatic</span>
+<span class="s">  revisionHistoryLimit: 1</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check the Configuration.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl get configuration acw-storage-configuration
+
+kubectl get crds <span class="p">|</span> grep xdostorages
+
+kubectl get composition <span class="p">|</span> grep xdostorages
+</code></pre></div>
+</td></tr></table>
+</li>
+</ul>
+<h3 id="32-resource-claim-again">3.2 Resource Claim again</h3>
+<p>Secondly, user will create a claim for the Storage composition but this time loaded from a Configuration package.</p>
+<ul>
+<li>
+<p>Create a <code>CompositeResourceDefinition</code> for our Object Storage.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: storage.acw.alvsanand.github.io/v1alpha1</span>
+<span class="s">kind: XDObjectStorage</span>
+<span class="s">metadata:</span>
+<span class="s">    name: some-bucket</span>
+<span class="s">    namespace: default</span>
+<span class="s">spec:</span>
+<span class="s">    compositionSelector:</span>
+<span class="s">        matchLabels:</span>
+<span class="s">            provider: aws</span>
+<span class="s">    parameters:</span>
+<span class="s">        storageName: some-bucket</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check that the xdostorages is created.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl get xdostorages
+
+...
+NAME          READY   COMPOSITION                                       AGE
+some-bucket   True    xdostorages.aws.storage.acw.alvsanand.github.io   89s
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check that the bucket object is created.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl get bucket
+
+...
+NAME              READY   SYNCED   AGE
+some-bucket-acw   True    True     113s
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check that the bucket has been created in LocalStack.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>awslocal s3api list-buckets
+
+...
+<span class="o">{</span>
+    <span class="s2">&quot;Buckets&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&quot;Name&quot;</span>: <span class="s2">&quot;some-bucket-acw&quot;</span>,
+            <span class="s2">&quot;CreationDate&quot;</span>: <span class="s2">&quot;2022-01-06T08:05:16.000Z&quot;</span>
+        <span class="o">}</span>
+    <span class="o">]</span>,
+    <span class="s2">&quot;Owner&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;DisplayName&quot;</span>: <span class="s2">&quot;webfile&quot;</span>,
+        <span class="s2">&quot;ID&quot;</span>: <span class="s2">&quot;bcaf1ffd86f41161ca5fb16fd081034f&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+</ul>
+<h3 id="33-cleanup-the-package">3.3 Cleanup the Package</h3>
+<p>Finally, delete all resources created.</p>
+<ul>
+<li>
+<p>Delete all the resources:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>kubectl delete xdostorages some-bucket
+
+kubectl delete composition xdostorages.aws.storage.acw.alvsanand.github.io
+
+kubectl delete crds xdostorages.storage.acw.alvsanand.github.io
+
+kubectl delete configuration acw-storage-configuration
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Check that the bucket has been created in LocalStack.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>awslocal s3api list-buckets
+
+...
+<span class="o">{</span>
+    <span class="s2">&quot;Buckets&quot;</span>: <span class="o">[]</span>,
+    <span class="s2">&quot;Owner&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;DisplayName&quot;</span>: <span class="s2">&quot;webfile&quot;</span>,
+        <span class="s2">&quot;ID&quot;</span>: <span class="s2">&quot;bcaf1ffd86f41161ca5fb16fd081034f&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+</ul>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../setup/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 1 - Setup" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Lab 1 - Setup
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../implement-gitops/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 3 - Implement GitOps" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Lab 3 - Implement GitOps
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest"], "search": "../assets/javascripts/workers/search.5e67fbfe.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c44cc438.min.js"></script>
+      
+    
+  </body>
+</html>
